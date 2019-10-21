@@ -13,6 +13,7 @@
 		93BB6A92235D14B10012290C /* ccustomer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 93BB6A90235D14B10012290C /* ccustomer.cpp */; };
 		93BB6A95235D14C20012290C /* caccount.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 93BB6A93235D14C20012290C /* caccount.cpp */; };
 		93BB6A98235D14E30012290C /* UE02.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 93BB6A96235D14E30012290C /* UE02.cpp */; };
+		93BB6A9B235D940A0012290C /* cmoney.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 93BB6A99235D940A0012290C /* cmoney.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -40,6 +41,8 @@
 		93BB6A93235D14C20012290C /* caccount.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = caccount.cpp; sourceTree = "<group>"; };
 		93BB6A94235D14C20012290C /* caccount.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = caccount.h; sourceTree = "<group>"; };
 		93BB6A96235D14E30012290C /* UE02.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = UE02.cpp; sourceTree = "<group>"; };
+		93BB6A99235D940A0012290C /* cmoney.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = cmoney.cpp; sourceTree = "<group>"; };
+		93BB6A9A235D940A0012290C /* cmoney.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = cmoney.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -83,14 +86,16 @@
 			children = (
 				93BB6A88235D146D0012290C /* cdate.h */,
 				93BB6A87235D146D0012290C /* cdate.cpp */,
-				93BB6A8A235D14880012290C /* ctime.cpp */,
 				93BB6A8B235D14880012290C /* ctime.h */,
-				93BB6A8D235D14960012290C /* caddress.cpp */,
+				93BB6A8A235D14880012290C /* ctime.cpp */,
+				93BB6A9A235D940A0012290C /* cmoney.h */,
+				93BB6A99235D940A0012290C /* cmoney.cpp */,
 				93BB6A8E235D14960012290C /* caddress.h */,
-				93BB6A90235D14B10012290C /* ccustomer.cpp */,
+				93BB6A8D235D14960012290C /* caddress.cpp */,
 				93BB6A91235D14B10012290C /* ccustomer.h */,
-				93BB6A93235D14C20012290C /* caccount.cpp */,
+				93BB6A90235D14B10012290C /* ccustomer.cpp */,
 				93BB6A94235D14C20012290C /* caccount.h */,
+				93BB6A93235D14C20012290C /* caccount.cpp */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -158,6 +163,7 @@
 				93BB6A98235D14E30012290C /* UE02.cpp in Sources */,
 				93BB6A89235D146D0012290C /* cdate.cpp in Sources */,
 				93BB6A92235D14B10012290C /* ccustomer.cpp in Sources */,
+				93BB6A9B235D940A0012290C /* cmoney.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

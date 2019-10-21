@@ -3,12 +3,12 @@
 using namespace std;
 
 #include <stdio.h>
-#include "cdate.h"
-#include "ctime.h"
-#include "cmoney.h"
-#include "caddress.h"
-#include "caccount.h"
-#include "ccustomer.h"
+#include "Classes/cdate.h"
+#include "Classes/ctime.h"
+#include "Classes/cmoney.h"
+#include "Classes/caddress.h"
+#include "Classes/caccount.h"
+#include "Classes/ccustomer.h"
 
 int main()
 {

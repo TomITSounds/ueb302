@@ -9,6 +9,26 @@
 #ifndef ctime_h
 #define ctime_h
 
-#include <stdio.h>
+#include <iostream>
+#include <string>
+#include <cstdio>
 
+using namespace std;
+
+class CTime{
+    private:
+        int Hour;
+        int Minute;
+        int Second;
+    
+    public:
+        CTime();
+        CTime(int, int);
+        CTime(int, int, int);
+        ~CTime();
+    
+        void setTime(int, int, int);
+        void print();
+    
+};
 #endif /* ctime_hpp */

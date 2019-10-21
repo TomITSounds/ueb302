@@ -6,7 +6,7 @@
 //  Copyright © 2019 Tom Mertens. All rights reserved.
 //
 
-#include "cdate.hpp"
+#include "cdate.h"
 #include <ctime>
 #include<stdio.h>
 
@@ -36,5 +36,5 @@ void CDate::setDate(int Day, int Month, int Year){
 }
 
 void CDate::print(){
-    printf("%02i.%02i.%4i", Day, Month, Year);
+    printf("%02d.%02d.%4d", Day, Month, Year);
 }
