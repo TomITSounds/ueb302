@@ -1,21 +1,13 @@
-//
-//  caccount.hpp
-//  ueb302
-//
-//  Created by Tom Mertens on 21.10.19.
-//  Copyright © 2019 Tom Mertens. All rights reserved.
-//
-
 #ifndef caccount_h
 #define caccount_h
 
-#include "ccustomer.h"
 #include <iostream>
 #include <string>
 #include <cstdio>
 #include "caddress.h"
 #include "cdate.h"
 #include "cmoney.h"
+#include "ccustomer.h"
 
 using namespace std;
 

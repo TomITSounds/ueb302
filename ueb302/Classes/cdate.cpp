@@ -1,11 +1,3 @@
-//
-//  CDate.cpp
-//  ueb301
-//
-//  Created by Tom Mertens on 18.10.19.
-//  Copyright © 2019 Tom Mertens. All rights reserved.
-//
-
 #include "cdate.h"
 #include <ctime>
 #include<stdio.h>

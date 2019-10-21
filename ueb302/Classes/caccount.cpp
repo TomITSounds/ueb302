@@ -1,11 +1,3 @@
-//
-//  caccount.cpp
-//  ueb302
-//
-//  Created by Tom Mertens on 21.10.19.
-//  Copyright © 2019 Tom Mertens. All rights reserved.
-//
-
 #include "ccustomer.h"
 #include <iostream>
 #include <string>
@@ -23,7 +15,7 @@ CAccount::CAccount(string IBAN, CCustomer *Owner, CMoney Balance){
     this->Balance = Balance;
 };
 
-CAccount::set(string IBAN, CCustomer *Owner, CMoney Balance){
+void CAccount::set(string IBAN, CCustomer *Owner, CMoney Balance){
     this->IBAN = IBAN;
     this->Owner = Owner;
     this->Balance = Balance;
@@ -34,4 +26,6 @@ void CAccount::print(){
     printf("%s (Kd-Nr. %ld\n", Owner->Name.c_str(), Owner->CusNr);
     printf("IBAN:        ");
     printIBAN();
+    printf("\n");
+    Balance.print();
 };

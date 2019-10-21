@@ -1,11 +1,3 @@
-//
-//  ccustomer.cpp
-//  ueb302
-//
-//  Created by Tom Mertens on 21.10.19.
-//  Copyright © 2019 Tom Mertens. All rights reserved.
-//
-
 #include "ccustomer.h"
 #include <iostream>
 #include <string>
@@ -44,9 +36,6 @@ void CCustomer::print(){
         printf("\n- Kontonr.: ");
         Accounts[i]->printIBAN();
     }
-    
-        
-    
 };
 
 bool CCustomer::addAccount(CAccount *New){
