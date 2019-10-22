@@ -26,11 +26,11 @@ private:
 public:
     
     CCustomer(long CusNr, string Name, CDate DOB, CAddress Address);
-    //~CCustomer();
+    //~CCustomer(); //
     void set(long CusNr, string Name, CDate DOB, CAddress Address);
     long getCusNr(){return CusNr;};
-    string getName(){return Name;};
     void print();
+    string getName(){return Name;};
     bool addAccount(CAccount *New);
 
 };

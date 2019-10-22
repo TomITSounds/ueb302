@@ -7,16 +7,9 @@
 using namespace std;
 
 
-CCustomer::CCustomer(long CusNr, string Name, CDate DOB, CAddress Address): CusNr(CusNr), Name(Name), DOB(DOB), Address(Address){}
+CCustomer::CCustomer(long CusNr, string Name, CDate DOB, CAddress Address): CusNr(CusNr), Name(Name), DOB(DOB), Address(Address), AccCount(0){}
 
-/*{
-    this->CusNr = CusNr;
-    this->Name = Name;
-    this->DOB = DOB;
-    this->Address = Address;
-    AccCount = 0;
-}*/
-
+//Muss ueber Liste initialisiert werden da Address kein Standardkonstruktur
 
 void CCustomer::set(long CusNr, string Name, CDate DOB, CAddress Address){
     this->CusNr = CusNr;
@@ -42,11 +35,11 @@ void CCustomer::print(){
 }
 
 bool CCustomer::addAccount(CAccount *New){
-    /*if (AccCount > MAX_ACCOUNTS){
+    /*if (AccCount > MAX_ACCOUNTS){             //Sicherheitsabfrage fuer MaxAccount, noch nicht noetig...
         printf("MaxAccounts ueberschritten!");
         return false;
     }*/
-    Accounts[AccCount] = New;
+    Accounts[AccCount] = New;           //Hinzufuegen zu Zeigerarray
     AccCount++;
     return true;
 }

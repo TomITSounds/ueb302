@@ -4,11 +4,12 @@
 #include <cstdio>
 using namespace std;
 
-/*CAddress::CAddress(CAddress &Copy){
+//Copy Konstruktor zur Initialisierung eines Objekt mit den werden eines anderen Objekt gleicher Klasse
+CAddress::CAddress(const CAddress &Copy){
     Street = Copy.Street;
     Zip = Copy.Zip;
     City = Copy.City;
-}*/
+}
 
 CAddress::CAddress(string Street, string Zip, string City){
     this->Street = Street;
@@ -22,10 +23,6 @@ void CAddress::set(string Street, string Zip, string City){
     this-> City = City;
 }
 
-
-void CAddress::print(){
-    printf("%s, %s %s", Street.c_str(), Zip.c_str(), City.c_str());
-}
 void CAddress::printStreet(){
     printf("%s", Street.c_str());
 }
@@ -33,3 +30,4 @@ void CAddress::printStreet(){
 void CAddress::printZipCity(){
     printf("%s %s", Zip.c_str(), City.c_str());
 }
+

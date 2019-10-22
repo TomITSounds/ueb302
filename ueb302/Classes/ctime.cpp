@@ -9,9 +9,9 @@ CTime::CTime(){
     time_t Now;
     time(&Now);
     tm NowNow = (*localtime(&Now));         //Conversion
-    Hour    = NowNow.tm_hour;
-    Minute   = NowNow.tm_min ;
-    Second     = NowNow.tm_sec;
+    Hour = NowNow.tm_hour;
+    Minute = NowNow.tm_min ;
+    Second = NowNow.tm_sec;
     
 }
 
