@@ -44,6 +44,8 @@ int main()
    printf("Daten des Konto 2:\n");
    Konto2.print();
    printf("\n\n");
+    
+    Adresse.printZipCity();
 
    return 0;
 }

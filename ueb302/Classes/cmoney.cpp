@@ -30,5 +30,5 @@ void CMoney::set(double Amount, string Currency){
 
 
 void CMoney::print(){
-    printf("%02.2f %s", Amount, Currency.c_str());
+    printf("Kontostand: %02.2f %s", Amount, Currency.c_str());
 }

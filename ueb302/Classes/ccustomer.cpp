@@ -6,13 +6,16 @@
 #include "cdate.h"
 using namespace std;
 
-CCustomer::CCustomer(long CusNr, string Name, CDate DOB, CAddress Address){
+
+CCustomer::CCustomer(long CusNr, string Name, CDate DOB, CAddress Address): CusNr(CusNr), Name(Name), DOB(DOB), Address(Address){}
+
+/*{
     this->CusNr = CusNr;
     this->Name = Name;
     this->DOB = DOB;
     this->Address = Address;
     AccCount = 0;
-};
+}*/
 
 
 void CCustomer::set(long CusNr, string Name, CDate DOB, CAddress Address){
@@ -20,11 +23,11 @@ void CCustomer::set(long CusNr, string Name, CDate DOB, CAddress Address){
     this->Name = Name;
     this->DOB = DOB;
     this->Address = Address;
-};
+}
 
 
 void CCustomer::print(){
-    printf("%s (Kd-Nr. %ld\n", Name.c_str(), CusNr);
+    printf("%s (Kd-Nr. %ld)\n", Name.c_str(), CusNr);
     Address.printStreet();
     printf("\n");
     Address.printZipCity();
@@ -36,7 +39,7 @@ void CCustomer::print(){
         printf("\n- Kontonr.: ");
         Accounts[i]->printIBAN();
     }
-};
+}
 
 bool CCustomer::addAccount(CAccount *New){
     /*if (AccCount > MAX_ACCOUNTS){
@@ -46,4 +49,6 @@ bool CCustomer::addAccount(CAccount *New){
     Accounts[AccCount] = New;
     AccCount++;
     return true;
-};
+}
+
+

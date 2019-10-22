@@ -9,7 +9,7 @@ CTime::CTime(){
     time_t Now;
     time(&Now);
     tm NowNow = (*localtime(&Now));         //Conversion
-    Hour    = NowNow.tm_hour + 1900;
+    Hour    = NowNow.tm_hour;
     Minute   = NowNow.tm_min ;
     Second     = NowNow.tm_sec;
     
@@ -37,5 +37,5 @@ void CTime::setTime(int Hour, int Minute, int Second){
 }
 
 void CTime::print(){
-    printf("%02d.%02d.%02d", Hour, Minute, Second);
+    printf("%02d:%02d:%02d", Hour, Minute, Second);
 }

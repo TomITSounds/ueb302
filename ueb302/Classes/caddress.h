@@ -13,7 +13,10 @@ private:
     string City;
     
 public:
-    CAddress(string Street, string Zip, string City);
+    //CAddress();
+    //CAddress(const CAddress&);
+    CAddress(string , string , string );
+    
     void set(string Street, string Zip, string City);
     string get(){return Street+", "+Zip+", "+City;};
     string getStreet(){return Street;};

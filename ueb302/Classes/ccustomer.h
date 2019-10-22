@@ -12,6 +12,8 @@ using namespace std;
 
 #define MAX_ACCOUNTS 10
 
+class CAccount;
+
 class CCustomer{
 private:
     long CusNr;
@@ -22,10 +24,12 @@ private:
     int AccCount;
 
 public:
+    
     CCustomer(long CusNr, string Name, CDate DOB, CAddress Address);
-    ~CCustomer();
+    //~CCustomer();
     void set(long CusNr, string Name, CDate DOB, CAddress Address);
-    void get();
+    long getCusNr(){return CusNr;};
+    string getName(){return Name;};
     void print();
     bool addAccount(CAccount *New);
 

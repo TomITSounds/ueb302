@@ -4,11 +4,18 @@
 #include <cstdio>
 using namespace std;
 
+/*CAddress::CAddress(CAddress &Copy){
+    Street = Copy.Street;
+    Zip = Copy.Zip;
+    City = Copy.City;
+}*/
+
 CAddress::CAddress(string Street, string Zip, string City){
     this->Street = Street;
     this->Zip = Zip;
     this-> City = City;
 }
+
 void CAddress::set(string Street, string Zip, string City){
     this->Street = Street;
     this->Zip = Zip;
@@ -19,7 +26,6 @@ void CAddress::set(string Street, string Zip, string City){
 void CAddress::print(){
     printf("%s, %s %s", Street.c_str(), Zip.c_str(), City.c_str());
 }
-
 void CAddress::printStreet(){
     printf("%s", Street.c_str());
 }

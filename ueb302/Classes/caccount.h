@@ -1,15 +1,16 @@
 #ifndef caccount_h
 #define caccount_h
 
+#include "ccustomer.h"
 #include <iostream>
 #include <string>
 #include <cstdio>
 #include "caddress.h"
 #include "cdate.h"
 #include "cmoney.h"
-#include "ccustomer.h"
 
 using namespace std;
+class CCustomer;
 
 class CAccount{
 private:
