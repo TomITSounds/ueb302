@@ -26,6 +26,7 @@ void CAccount::printIBAN(){
     string dummy = IBAN;                //dummy da sons Original veraendert wird
     dummy.insert(20, " ");            //Leerstellen von hinten nach vorne
     dummy.insert(16, " ");
+    dummy.insert(12, " ");
     dummy.insert(8, " ");
     dummy.insert(4, " ");
     printf("%s", dummy.c_str());
@@ -33,9 +34,7 @@ void CAccount::printIBAN(){
     
 void CAccount::print(){
     printf("Kunde:       ");
-    string dummy = Owner->getName();
-    long dummy2 = Owner->getCusNr();
-    printf("%s (Kd-Nr. %ld)\n", dummy.c_str(), dummy2);  //oder geht auch (Owner->getName()).c_str() ??
+    printf("%s (Kd-Nr. %ld)\n", (Owner->getName()).c_str(), Owner->getCusNr());  //oder geht auch (Owner->getName()).c_str() ??
     printf("IBAN:        ");
     printIBAN();
     printf("\n");

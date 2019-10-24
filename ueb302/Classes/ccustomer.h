@@ -19,14 +19,14 @@ private:
     long CusNr;
     string Name;
     CAddress Address;
-    CDate DOB;
+    CDate DOB;          //Date ofBirth
     CAccount *Accounts[MAX_ACCOUNTS];
     int AccCount;
 
 public:
     
     CCustomer(long CusNr, string Name, CDate DOB, CAddress Address);
-    //~CCustomer(); //
+    ~CCustomer(){}; 
     void set(long CusNr, string Name, CDate DOB, CAddress Address);
     long getCusNr(){return CusNr;};
     void print();

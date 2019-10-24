@@ -14,13 +14,6 @@ CTime::CTime(){
     Second = NowNow.tm_sec;
     
 }
-
-CTime::CTime(int Hour, int Minute){
-    this->Hour = Hour;
-    this->Minute = Minute;
-    Second = 0;
-}
-
     
 CTime::CTime(int Hour, int Minute, int Second){
     this->Hour = Hour;

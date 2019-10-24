@@ -11,16 +11,11 @@ CMoney::CMoney(double Amount, string Currency){
     this->Currency = Currency;
 }
 
-CMoney::CMoney(double Amount){
-    this->Amount = Amount;
-    Currency = "EUR";
-}
 
 CMoney::~CMoney(){};
 
 void CMoney::set(double Amount){
     this->Amount = Amount;
-    Currency = "EUR";
 }
 
 void CMoney::set(double Amount, string Currency){

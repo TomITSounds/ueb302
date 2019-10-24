@@ -15,11 +15,10 @@ class CTime{
     
     public:
         CTime();
-        CTime(int, int);
-        CTime(int, int, int);
+        CTime(int, int, int = 0);
         ~CTime();
     
-        void setTime(int, int, int);
+        void setTime(int, int, int = 0);
         void print();
     
 };

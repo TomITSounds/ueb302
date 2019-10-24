@@ -13,8 +13,8 @@ class CMoney{
     
     public:
     CMoney();
-    CMoney(double);
-    CMoney(double, string);
+    
+    CMoney(double, string = "EUR");
     ~CMoney();
     
     void set(double);

@@ -4,13 +4,6 @@
 #include <cstdio>
 using namespace std;
 
-//Copy Konstruktor zur Initialisierung eines Objekt mit den werden eines anderen Objekt gleicher Klasse
-CAddress::CAddress(const CAddress &Copy){
-    Street = Copy.Street;
-    Zip = Copy.Zip;
-    City = Copy.City;
-}
-
 CAddress::CAddress(string Street, string Zip, string City){
     this->Street = Street;
     this->Zip = Zip;

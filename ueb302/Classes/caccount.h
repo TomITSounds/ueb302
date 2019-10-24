@@ -24,7 +24,5 @@ public:
     void print();
     void printIBAN();
      
-    
-    
 };
 #endif /* caccount_hpp */
