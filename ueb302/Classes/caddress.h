@@ -7,6 +7,7 @@
 using namespace std;
 
 class CAddress{
+
 private:
     string Street;
     string Zip;
@@ -14,6 +15,7 @@ private:
     
 public:
     CAddress(string , string , string );
+    ~CAddress();
     
     void set(string Street, string Zip, string City);
     string get(){return Street+", "+Zip+", "+City;};

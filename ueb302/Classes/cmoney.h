@@ -4,16 +4,17 @@
 #include <iostream>
 #include <string>
 #include <cstdio>
+
 using namespace std;
 
 class CMoney{
-    private:
+
+private:
     double Amount;
     string Currency;
     
-    public:
+public:
     CMoney();
-    
     CMoney(double, string = "EUR");
     ~CMoney();
     

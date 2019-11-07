@@ -3,6 +3,7 @@
 #include <iostream>
 #include <string>
 #include <cstdio>
+
 using namespace std;
 
 CTime::CTime(){
@@ -12,7 +13,6 @@ CTime::CTime(){
     Hour = NowNow.tm_hour;
     Minute = NowNow.tm_min ;
     Second = NowNow.tm_sec;
-    
 }
     
 CTime::CTime(int Hour, int Minute, int Second){
@@ -21,7 +21,9 @@ CTime::CTime(int Hour, int Minute, int Second){
     this->Second = Second;
 }
 
-CTime::~CTime(){};
+CTime::~CTime(){
+    printf("Dekonstruktor CTime");
+};
 
 void CTime::setTime(int Hour, int Minute, int Second){
      this->Hour = Hour;

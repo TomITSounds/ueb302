@@ -19,7 +19,9 @@ CDate::CDate(int Day, int Month, int Year){
     this->Day = Day;
 }
 
-CDate::~CDate(){};
+CDate::~CDate(){
+    printf("Dekonstruktor CDate");
+};
 
 void CDate::setDate(int Day, int Month, int Year){
     this->Year = Year;

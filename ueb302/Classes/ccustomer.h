@@ -9,12 +9,12 @@
 #include "caccount.h"
 using namespace std;
 
-
 #define MAX_ACCOUNTS 10
 
 class CAccount;
 
 class CCustomer{
+
 private:
     long CusNr;
     string Name;
@@ -23,10 +23,10 @@ private:
     CAccount *Accounts[MAX_ACCOUNTS];
     int AccCount;
 
-public:
-    
+public:    
     CCustomer(long CusNr, string Name, CDate DOB, CAddress Address);
-    ~CCustomer(){}; 
+    ~CCustomer();
+    
     void set(long CusNr, string Name, CDate DOB, CAddress Address);
     long getCusNr(){return CusNr;};
     void print();

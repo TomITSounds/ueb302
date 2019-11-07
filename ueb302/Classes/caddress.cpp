@@ -10,6 +10,10 @@ CAddress::CAddress(string Street, string Zip, string City){
     this-> City = City;
 }
 
+CAddress::~CAddress(){
+    printf("Dekonstruktor CAddress");
+};
+
 void CAddress::set(string Street, string Zip, string City){
     this->Street = Street;
     this->Zip = Zip;

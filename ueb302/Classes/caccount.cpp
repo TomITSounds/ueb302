@@ -9,12 +9,17 @@
 
 using namespace std;
 
-CAccount::CAccount(string IBAN, CCustomer *Owner, CMoney Balance){
+CAccount::CAccount(CBank *bank, string IBAN, CCustomer *Owner, CMoney Balance){
     this->IBAN = IBAN;
     this->Owner = Owner;
     Owner->addAccount(this);        //Account im Ownerobjekt hinzufuegen
     this->Balance = Balance;
+    bank->addAccount(this);
 };
+
+CAccount::~CAccount(){
+    printf("Dekonstruktor CAccount");
+}
 
 void CAccount::set(string IBAN, CCustomer *Owner, CMoney Balance){
     this->IBAN = IBAN;

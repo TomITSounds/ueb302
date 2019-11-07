@@ -11,8 +11,9 @@ CMoney::CMoney(double Amount, string Currency){
     this->Currency = Currency;
 }
 
-
-CMoney::~CMoney(){};
+CMoney::~CMoney(){
+    printf("Dekonstruktor CMoney");
+};
 
 void CMoney::set(double Amount){
     this->Amount = Amount;
