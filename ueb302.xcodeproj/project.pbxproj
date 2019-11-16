@@ -10,6 +10,7 @@
 		93675B5223748D3F00AA44D3 /* cbank.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 93675B5023748D3F00AA44D3 /* cbank.cpp */; };
 		93675B5523748D5500AA44D3 /* ccurrentaccount.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 93675B5323748D5500AA44D3 /* ccurrentaccount.cpp */; };
 		93675B5823748D6A00AA44D3 /* csavingsaccount.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 93675B5623748D6A00AA44D3 /* csavingsaccount.cpp */; };
+		939247FA23757539005F5DE6 /* timestamp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 939247F823757539005F5DE6 /* timestamp.cpp */; };
 		93BB6A89235D146D0012290C /* cdate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 93BB6A87235D146D0012290C /* cdate.cpp */; };
 		93BB6A8C235D14880012290C /* ctime.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 93BB6A8A235D14880012290C /* ctime.cpp */; };
 		93BB6A8F235D14960012290C /* caddress.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 93BB6A8D235D14960012290C /* caddress.cpp */; };
@@ -38,6 +39,8 @@
 		93675B5423748D5500AA44D3 /* ccurrentaccount.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ccurrentaccount.h; sourceTree = "<group>"; };
 		93675B5623748D6A00AA44D3 /* csavingsaccount.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = csavingsaccount.cpp; sourceTree = "<group>"; };
 		93675B5723748D6A00AA44D3 /* csavingsaccount.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = csavingsaccount.h; sourceTree = "<group>"; };
+		939247F823757539005F5DE6 /* timestamp.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = timestamp.cpp; sourceTree = "<group>"; };
+		939247F923757539005F5DE6 /* timestamp.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = timestamp.h; sourceTree = "<group>"; };
 		93BB6A7C235D143D0012290C /* ueb302 */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = ueb302; sourceTree = BUILT_PRODUCTS_DIR; };
 		93BB6A87235D146D0012290C /* cdate.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = cdate.cpp; sourceTree = "<group>"; };
 		93BB6A88235D146D0012290C /* cdate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = cdate.h; sourceTree = "<group>"; };
@@ -97,6 +100,8 @@
 				93BB6A87235D146D0012290C /* cdate.cpp */,
 				93BB6A8B235D14880012290C /* ctime.h */,
 				93BB6A8A235D14880012290C /* ctime.cpp */,
+				939247F923757539005F5DE6 /* timestamp.h */,
+				939247F823757539005F5DE6 /* timestamp.cpp */,
 				93BB6A9A235D940A0012290C /* cmoney.h */,
 				93BB6A99235D940A0012290C /* cmoney.cpp */,
 				93BB6A8E235D14960012290C /* caddress.h */,
@@ -174,6 +179,7 @@
 			files = (
 				93BB6A8F235D14960012290C /* caddress.cpp in Sources */,
 				93675B5223748D3F00AA44D3 /* cbank.cpp in Sources */,
+				939247FA23757539005F5DE6 /* timestamp.cpp in Sources */,
 				93BB6A8C235D14880012290C /* ctime.cpp in Sources */,
 				93BB6A95235D14C20012290C /* caccount.cpp in Sources */,
 				93BB6A98235D14E30012290C /* UE02.cpp in Sources */,

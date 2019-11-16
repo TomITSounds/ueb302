@@ -4,6 +4,8 @@
 #include <cstdio>
 #include "caddress.h"
 #include "cdate.h"
+#include <iomanip>
+
 using namespace std;
 
 
@@ -24,28 +26,28 @@ void CCustomer::set(long CusNr, string Name, CDate DOB, CAddress Address){
 
 
 void CCustomer::print(){
-    printf("%s (Kd-Nr. %ld)\n", Name.c_str(), CusNr);
+
+    cout << Name << " (Kd-Nr. " << CusNr << ")" << endl;
     Address.printStreet();
-    printf("\n");
+    cout << endl;
     Address.printZipCity();
-    printf("\n");
-    printf("geboren am: ");
+    cout << endl;
+    cout << "geboren am: " << endl;
     DOB.print();
-    printf("\nKonten:");
+    cout << endl << "Konten:";
     for(int i = 0; i<AccCount; i++){
-        printf("\n- Kontonr.: ");
+        cout << endl << "- Kontonr.: ";
         Accounts[i]->printIBAN();
     }
 }
 
 bool CCustomer::addAccount(CAccount *New){
-    /*if (AccCount > MAX_ACCOUNTS){             //Sicherheitsabfrage fuer MaxAccount, noch nicht noetig...
-        printf("MaxAccounts ueberschritten!");
-        return false;
-    }*/
-    Accounts[AccCount] = New;           //Hinzufuegen zu Zeigerarray
-    AccCount++;
-    return true;
+    if(New){    //checks for Null
+        Accounts[AccCount] = New;           //Hinzufuegen zu Zeigerarray
+        AccCount++;
+        return true;
+    }
+    return false;
 }
 
 

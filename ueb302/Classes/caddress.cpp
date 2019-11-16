@@ -11,7 +11,7 @@ CAddress::CAddress(string Street, string Zip, string City){
 }
 
 CAddress::~CAddress(){
-    printf("Dekonstruktor CAddress");
+    cout << "Dekonstruktor CAddress" << endl;
 };
 
 void CAddress::set(string Street, string Zip, string City){
@@ -21,10 +21,16 @@ void CAddress::set(string Street, string Zip, string City){
 }
 
 void CAddress::printStreet(){
-    printf("%s", Street.c_str());
+    cout << Street << flush;
 }
 
 void CAddress::printZipCity(){
-    printf("%s %s", Zip.c_str(), City.c_str());
+    cout << Zip << " " << City << flush;
 }
 
+void CAddress::print(){
+    printStreet();
+    cout << endl;
+    printZipCity();
+    cout << endl;
+}

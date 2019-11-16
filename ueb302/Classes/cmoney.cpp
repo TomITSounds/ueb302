@@ -1,7 +1,8 @@
 #include "cmoney.h"
 #include <iostream>
 #include <string>
-#include <cstdio>
+#include <iomanip>
+
 using namespace std;
 
 CMoney::CMoney(): Amount(0.0), Currency("EUR"){};
@@ -12,7 +13,7 @@ CMoney::CMoney(double Amount, string Currency){
 }
 
 CMoney::~CMoney(){
-    printf("Dekonstruktor CMoney");
+    cout << "Dekonstruktor CMoney" << endl;
 };
 
 void CMoney::set(double Amount){
@@ -26,5 +27,13 @@ void CMoney::set(double Amount, string Currency){
 
 
 void CMoney::print(){
-    printf("Kontostand: %02.2f %s", Amount, Currency.c_str());
+    cout    << setfill('0') << setprecision(2)
+            << "Kontostand: " << Amount << " " << Currency << endl;
+}
+
+void CMoney::lprint(){
+    cout    << setfill('0') << setprecision(2) << Amount
+            << " "
+            << setfill(' ') << setw(3) << Currency
+            << endl;
 }

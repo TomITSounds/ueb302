@@ -12,6 +12,7 @@
 using namespace std;
 
 class CAccount;
+
 #define MAX_ACCOUNTS 100
 
 class CBank{

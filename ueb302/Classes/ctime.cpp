@@ -3,6 +3,7 @@
 #include <iostream>
 #include <string>
 #include <cstdio>
+#include <iomanip>
 
 using namespace std;
 
@@ -22,7 +23,7 @@ CTime::CTime(int Hour, int Minute, int Second){
 }
 
 CTime::~CTime(){
-    printf("Dekonstruktor CTime");
+    cout << "Dekonstruktor CTime" << endl;
 };
 
 void CTime::setTime(int Hour, int Minute, int Second){
@@ -32,5 +33,11 @@ void CTime::setTime(int Hour, int Minute, int Second){
 }
 
 void CTime::print(){
-    printf("%02d:%02d:%02d", Hour, Minute, Second);
+    cout
+    << setfill('0')
+    <<setw(2) << Hour
+    << "."
+    << setw(2)<< Minute
+    << "." << setw(2)
+    << Second << endl;
 }

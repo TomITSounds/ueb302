@@ -18,7 +18,7 @@ CAccount::CAccount(CBank *bank, string IBAN, CCustomer *Owner, CMoney Balance){
 };
 
 CAccount::~CAccount(){
-    printf("Dekonstruktor CAccount");
+    cout <<"Dekonstruktor CAccount" << endl;;
 }
 
 void CAccount::set(string IBAN, CCustomer *Owner, CMoney Balance){
@@ -34,14 +34,18 @@ void CAccount::printIBAN(){
     dummy.insert(12, " ");
     dummy.insert(8, " ");
     dummy.insert(4, " ");
-    printf("%s", dummy.c_str());
+    cout << dummy << flush;
 }
     
 void CAccount::print(){
-    printf("Kunde:       ");
-    printf("%s (Kd-Nr. %ld)\n", (Owner->getName()).c_str(), Owner->getCusNr());  //oder geht auch (Owner->getName()).c_str() ??
-    printf("IBAN:        ");
+    
+     cout
+    << "Kunde:       "<< Owner->getName()
+    << " (Kd-Nr. " << Owner->getCusNr()
+    << ")" << endl
+    << "IBAN:        " << flush;
     printIBAN();
-    printf("\n");
+    cout << endl;
     Balance.print();
 }
+

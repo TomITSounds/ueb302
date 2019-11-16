@@ -25,10 +25,11 @@ private:
 public:
     CAccount(CBank *bank, string IBAN, CCustomer *Owner, CMoney Balance);
     ~CAccount();
-    
+    CCustomer *getOwner(){return Owner;};
     void set(string IBAN, CCustomer *Owner, CMoney Balance);
     void print();
     void printIBAN();
+    CMoney getBalance(){return Balance;};
      
 };
 #endif /* caccount_hpp */

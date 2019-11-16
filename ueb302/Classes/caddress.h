@@ -25,6 +25,5 @@ public:
     void print();
     void printStreet();
     void printZipCity();
-    
 };
 #endif /* caddress_hpp */

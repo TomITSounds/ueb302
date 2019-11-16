@@ -1,6 +1,9 @@
 #include "cdate.h"
 #include <ctime>
-#include<stdio.h>
+#include <iostream>
+#include <iomanip>
+
+using namespace std;
 
 
 CDate::CDate(){
@@ -20,7 +23,7 @@ CDate::CDate(int Day, int Month, int Year){
 }
 
 CDate::~CDate(){
-    printf("Dekonstruktor CDate");
+    cout << "Dekonstruktor CDate" << endl;
 };
 
 void CDate::setDate(int Day, int Month, int Year){
@@ -30,5 +33,11 @@ void CDate::setDate(int Day, int Month, int Year){
 }
 
 void CDate::print(){
-    printf("%02d.%02d.%4d", Day, Month, Year);
+    cout
+    << setfill('0')
+    <<setw(2) << Day
+    << "."
+    << setw(2) << Month
+    << "."
+    << setw(4) << Year << endl;
 }

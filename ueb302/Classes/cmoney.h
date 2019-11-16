@@ -24,5 +24,6 @@ public:
     double getAmount(){return Amount;};
     string getCurrency(){return Currency;};
     void print();
+    void lprint();
 };
 #endif /* cmoney_hpp */
