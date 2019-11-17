@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		930CA486238176FD00D6B2B1 /* cbankmanager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 930CA484238176FD00D6B2B1 /* cbankmanager.cpp */; };
+		930CA4892381847400D6B2B1 /* cfixedeposit.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 930CA4872381847400D6B2B1 /* cfixedeposit.cpp */; };
 		93675B5223748D3F00AA44D3 /* cbank.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 93675B5023748D3F00AA44D3 /* cbank.cpp */; };
 		93675B5523748D5500AA44D3 /* ccurrentaccount.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 93675B5323748D5500AA44D3 /* ccurrentaccount.cpp */; };
 		93675B5823748D6A00AA44D3 /* csavingsaccount.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 93675B5623748D6A00AA44D3 /* csavingsaccount.cpp */; };
@@ -36,6 +37,8 @@
 /* Begin PBXFileReference section */
 		930CA484238176FD00D6B2B1 /* cbankmanager.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = cbankmanager.cpp; sourceTree = "<group>"; };
 		930CA485238176FD00D6B2B1 /* cbankmanager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = cbankmanager.h; sourceTree = "<group>"; };
+		930CA4872381847400D6B2B1 /* cfixedeposit.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = cfixedeposit.cpp; sourceTree = "<group>"; };
+		930CA4882381847400D6B2B1 /* cfixedeposit.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = cfixedeposit.h; sourceTree = "<group>"; };
 		93675B5023748D3F00AA44D3 /* cbank.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = cbank.cpp; sourceTree = "<group>"; };
 		93675B5123748D3F00AA44D3 /* cbank.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = cbank.h; sourceTree = "<group>"; };
 		93675B5323748D5500AA44D3 /* ccurrentaccount.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ccurrentaccount.cpp; sourceTree = "<group>"; };
@@ -121,6 +124,8 @@
 				93675B5323748D5500AA44D3 /* ccurrentaccount.cpp */,
 				93675B5723748D6A00AA44D3 /* csavingsaccount.h */,
 				93675B5623748D6A00AA44D3 /* csavingsaccount.cpp */,
+				930CA4882381847400D6B2B1 /* cfixedeposit.h */,
+				930CA4872381847400D6B2B1 /* cfixedeposit.cpp */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -187,6 +192,7 @@
 				939247FA23757539005F5DE6 /* timestamp.cpp in Sources */,
 				930CA486238176FD00D6B2B1 /* cbankmanager.cpp in Sources */,
 				93BB6A8C235D14880012290C /* ctime.cpp in Sources */,
+				930CA4892381847400D6B2B1 /* cfixedeposit.cpp in Sources */,
 				93BB6A95235D14C20012290C /* caccount.cpp in Sources */,
 				93BB6A98235D14E30012290C /* UE02.cpp in Sources */,
 				93675B5823748D6A00AA44D3 /* csavingsaccount.cpp in Sources */,
@@ -313,6 +319,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
+				GCC_VERSION = "GNU C++";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -321,6 +328,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
+				GCC_VERSION = "GNU C++";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;

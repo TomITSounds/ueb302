@@ -10,5 +10,25 @@
 #define cbankmanager_h
 
 #include <stdio.h>
+#include "cbank.h"
+#include "ccustomer.h"
+#include <iostream>
+#include <fstream>
+#include <vector>
+
+using namespace std;
+
+class CBankManager{
+private:
+    vector <CCustomer> cuslist;
+    vector <CBank> banklist;
+    
+public:
+    CBankManager(string);
+    ~CBankManager();
+    
+    void printCustomerList();
+    void printBankList();
+};
 
 #endif /* cbankmanager_hpp */
