@@ -10,10 +10,9 @@ class CDate{
     public:
         CDate();
         CDate(int, int, int);
-        ~CDate();
     
         void setDate(int, int, int);
-        void print();
+        virtual void print();
     
 };
 

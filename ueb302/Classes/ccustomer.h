@@ -25,7 +25,6 @@ private:
 
 public:    
     CCustomer(long CusNr, string Name, CDate DOB, CAddress Address);
-    ~CCustomer();
     
     void set(long CusNr, string Name, CDate DOB, CAddress Address);
     long getCusNr(){return CusNr;};

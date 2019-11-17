@@ -8,14 +8,8 @@
 
 using namespace std;
 
-
 //Muss ueber Liste initialisiert werden da Address kein Standardkonstruktur
 CCustomer::CCustomer(long CusNr, string Name, CDate DOB, CAddress Address): CusNr(CusNr), Name(Name), DOB(DOB), Address(Address), AccCount(0){}
-
-CCustomer::~CCustomer(){
-    printf("Dekonstruktor CCustomer");
-}
-
 
 void CCustomer::set(long CusNr, string Name, CDate DOB, CAddress Address){
     this->CusNr = CusNr;
@@ -24,9 +18,7 @@ void CCustomer::set(long CusNr, string Name, CDate DOB, CAddress Address){
     this->Address = Address;
 }
 
-
 void CCustomer::print(){
-
     cout << Name << " (Kd-Nr. " << CusNr << ")" << endl;
     Address.printStreet();
     cout << endl;

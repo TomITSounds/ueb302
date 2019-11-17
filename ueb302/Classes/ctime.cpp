@@ -22,9 +22,6 @@ CTime::CTime(int Hour, int Minute, int Second){
     this->Second = Second;
 }
 
-CTime::~CTime(){
-    cout << "Dekonstruktor CTime" << endl;
-};
 
 void CTime::setTime(int Hour, int Minute, int Second){
      this->Hour = Hour;
@@ -32,7 +29,7 @@ void CTime::setTime(int Hour, int Minute, int Second){
      this->Second = Second;
 }
 
-void CTime::print(){
+ void CTime::print(){
     cout
     << setfill('0')
     <<setw(2) << Hour

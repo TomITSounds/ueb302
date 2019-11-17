@@ -12,10 +12,6 @@ CMoney::CMoney(double Amount, string Currency){
     this->Currency = Currency;
 }
 
-CMoney::~CMoney(){
-    cout << "Dekonstruktor CMoney" << endl;
-};
-
 void CMoney::set(double Amount){
     this->Amount = Amount;
 }
@@ -25,10 +21,9 @@ void CMoney::set(double Amount, string Currency){
     this->Currency = Currency;
 }
 
-
 void CMoney::print(){
     cout    << setfill('0') << setprecision(2)
-            << "Kontostand: " << Amount << " " << Currency << endl;
+            << "Kontostand: " << Amount << " " << Currency ;
 }
 
 void CMoney::lprint(){

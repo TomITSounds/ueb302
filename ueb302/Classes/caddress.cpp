@@ -10,10 +10,6 @@ CAddress::CAddress(string Street, string Zip, string City){
     this-> City = City;
 }
 
-CAddress::~CAddress(){
-    cout << "Dekonstruktor CAddress" << endl;
-};
-
 void CAddress::set(string Street, string Zip, string City){
     this->Street = Street;
     this->Zip = Zip;

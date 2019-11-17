@@ -14,9 +14,6 @@ CBank::CBank(string name, string bic){
     this->bic = bic;
     count = 0;
 }
-CBank::~CBank(){
-    cout << "Dekonstruktor CBank" << endl;
-}
 
 void CBank::set(string name, string bic){
     this->name = name;
@@ -27,15 +24,16 @@ void CBank::print(){
     cout    << name << endl
             << "BIC " << bic << endl
             << "Anzahl Konten: " << count << endl;
-    //Liste falls Konten vorhanden
+    
+        //Liste falls Konten vorhanden
     if (count){
         // flag linksbuendig
         int oldflag;
-        int lflag = ios::left;
-        int rflag = ios::right;
+        int lflag = ios::left | ios::fixed;
+        int rflag = ios::right | ios::fixed;
         oldflag = cout.flags(lflag);
         cout
-        << "Kontenliste:" << endl
+        << "Kontenliste:" << endl << setfill(' ') 
         << setw(28) << "IBAN"
         << setw(23) << "| Kundenname"
         << setw(16) << "| Anz. Buchungen"
@@ -58,8 +56,9 @@ void CBank::print(){
             cout
             << setw(15) << "0"
             << "|"
-            << setw(11) << Accounts[i]->getBalance().getAmount()
-            << setw(3) << Accounts[i]->getBalance().getCurrency()
+            << setw(11) << Accounts[i]->getBalance().getAmount();
+            cout.flags(lflag);
+            cout  <<  " " << setw(3) << Accounts[i]->getBalance().getCurrency()
             << endl;
             
         }

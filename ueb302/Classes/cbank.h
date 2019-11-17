@@ -25,11 +25,11 @@ private:
     
 public:
     CBank(string, string);
-    ~CBank();
     
     void set(string, string);
     void print();
     bool addAccount(CAccount *newacc);
+    string getbic(){return bic;};
     
 };
 

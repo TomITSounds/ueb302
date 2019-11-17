@@ -22,9 +22,6 @@ CDate::CDate(int Day, int Month, int Year){
     this->Day = Day;
 }
 
-CDate::~CDate(){
-    cout << "Dekonstruktor CDate" << endl;
-};
 
 void CDate::setDate(int Day, int Month, int Year){
     this->Year = Year;

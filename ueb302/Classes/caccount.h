@@ -27,7 +27,7 @@ public:
     ~CAccount();
     CCustomer *getOwner(){return Owner;};
     void set(string IBAN, CCustomer *Owner, CMoney Balance);
-    void print();
+    virtual void print();
     void printIBAN();
     CMoney getBalance(){return Balance;};
      

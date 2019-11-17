@@ -16,7 +16,6 @@ private:
 public:
     CMoney();
     CMoney(double, string = "EUR");
-    ~CMoney();
     
     void set(double);
     void set(double, string);
