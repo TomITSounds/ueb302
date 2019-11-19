@@ -20,8 +20,9 @@ using namespace std;
 
 class CBankManager{
 private:
-    vector <CCustomer> cuslist;
-    vector <CBank> banklist;
+    static vector <CCustomer*> cuslist;
+    static vector <CBank*> banklist;
+    static vector <CMoney> dispolist;
     
 public:
     CBankManager(string);
@@ -29,6 +30,11 @@ public:
     
     void printCustomerList();
     void printBankList();
+    
+    static CBank *getbankptr(string);
+    static CCustomer *getcusptr(long);
+    
+    
 };
 
 #endif /* cbankmanager_hpp */

@@ -9,6 +9,7 @@
 #include "cdate.h"
 #include "cmoney.h"
 #include "cbank.h"
+#include <fstream>
 
 using namespace std;
 
@@ -16,7 +17,7 @@ class CCustomer;
 class CBank;
 
 class CAccount{
-private:
+protected:
     string IBAN;
     CCustomer *Owner;
     CMoney Balance;
@@ -24,12 +25,19 @@ private:
     
 public:
     CAccount(CBank *bank, string IBAN, CCustomer *Owner, CMoney Balance);
-    ~CAccount();
+    CAccount(const CAccount&);
+    virtual ~CAccount();
+    
     CCustomer *getOwner(){return Owner;};
     void set(string IBAN, CCustomer *Owner, CMoney Balance);
     virtual void print();
     void printIBAN();
     CMoney getBalance(){return Balance;};
+    
+    static CAccount load(ifstream&, string);
      
+    /*friend class CCurrentAccount;
+    friend class CSavingsAccount;
+    friend class CFixedDepositAccount;*/
 };
 #endif /* caccount_hpp */

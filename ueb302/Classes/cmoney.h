@@ -4,6 +4,7 @@
 #include <iostream>
 #include <string>
 #include <cstdio>
+#include <fstream>
 
 using namespace std;
 
@@ -19,10 +20,13 @@ public:
     
     void set(double);
     void set(double, string);
+    void set(CMoney);
     
     double getAmount(){return Amount;};
     string getCurrency(){return Currency;};
     void print();
     void lprint();
+    
+    static CMoney load(ifstream&, string);
 };
 #endif /* cmoney_hpp */

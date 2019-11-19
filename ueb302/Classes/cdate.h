@@ -1,6 +1,11 @@
 #ifndef cdate_h
 #define cdate_h
 
+#include <fstream>
+#include <string>
+
+using namespace std;
+
 class CDate{
     private:
         int Day;
@@ -13,6 +18,8 @@ class CDate{
     
         void setDate(int, int, int);
         virtual void print();
+    
+    static CDate load(ifstream&, string);
     
 };
 

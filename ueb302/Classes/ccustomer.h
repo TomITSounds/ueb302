@@ -7,9 +7,10 @@
 #include "caddress.h"
 #include "cdate.h"
 #include "caccount.h"
-using namespace std;
+#include <fstream>
+#include <vector>
 
-#define MAX_ACCOUNTS 10
+using namespace std;
 
 class CAccount;
 
@@ -20,18 +21,19 @@ private:
     string Name;
     CAddress Address;
     CDate DOB;          //Date ofBirth
-    CAccount *Accounts[MAX_ACCOUNTS];
-    int AccCount;
+    vector <CAccount*> Accounts;
 
 public:    
-    CCustomer(long CusNr, string Name, CDate DOB, CAddress Address);
+    CCustomer(long CusNr, string Name, CAddress Address, CDate DOB);
+    CCustomer(const CCustomer&);
+    ~CCustomer();
     
-    void set(long CusNr, string Name, CDate DOB, CAddress Address);
+    void set(long CusNr, string Name, CAddress Address, CDate DOB);
     long getCusNr(){return CusNr;};
     void print();
     string getName(){return Name;};
     bool addAccount(CAccount *New);
-
+    static CCustomer load(ifstream&);
 };
 
 

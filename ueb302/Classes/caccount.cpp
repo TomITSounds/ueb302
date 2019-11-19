@@ -6,17 +6,19 @@
 #include "cdate.h"
 #include "caccount.h"
 #include "cmoney.h"
+#include <fstream>
+#include "cbankmanager.h"
+#include "basetypeload.hpp"
+
 
 using namespace std;
 
-CAccount::CAccount(CBank *bank, string IBAN, CCustomer *Owner, CMoney Balance){
-    this->IBAN = IBAN;
-    this->Owner = Owner;
+CAccount::CAccount(CBank *bank, string IBAN, CCustomer *Owner, CMoney Balance): bank(bank), IBAN(IBAN), Owner(Owner), Balance(Balance){
     Owner->addAccount(this);        //Account im Ownerobjekt hinzufuegen
-    this->Balance = Balance;
     bank->addAccount(this);
-    this->bank = bank;
 };
+
+CAccount::CAccount(const CAccount &copy): IBAN(copy.IBAN), Owner(copy.Owner), Balance(copy.Balance), bank(copy.bank){};
 
 CAccount::~CAccount(){
         cout << "CAccount:           Konto (" << flush;
@@ -56,3 +58,41 @@ void CAccount::print(){
     cout.flags(oldflag);
 }
 
+CAccount CAccount::load(ifstream& data, string endtag){
+    string line;
+    string *iban = NULL;
+    CCustomer *owner = NULL;
+    CBank *bank = NULL;
+    CMoney *amount = NULL;
+    string bankcmp;
+    long idcmp;
+    
+    do{
+        if(data.eof()){
+            cout << "Datei fehlerhaft Account"<<endl;
+            break;
+        }
+        
+        getline(data>>ws, line);
+        line.pop_back();
+        
+        if(line.substr(0, 6) == "<IBAN>")
+            iban = new string(basetypeload::load(line, "</IBAN>", iban));
+        
+        if(line.substr(0, 9) == "<Balance>")
+            amount = new CMoney(CMoney::load(data, "</Balance>"));
+        
+        if(line.substr(0, 6) == "<Bank>"){
+            basetypeload::load(line, "</Bank>", &bankcmp);
+            bank = CBankManager::getbankptr(bankcmp);
+        }
+        if(line.substr(0, 10) == "<Customer>"){
+                   basetypeload::load(line, "</Customer>", &idcmp);
+                   owner = CBankManager::getcusptr(idcmp);
+               }
+        
+    }while(line != endtag);
+    
+    CAccount ret(bank, *iban, owner, *amount);
+    return ret;
+}

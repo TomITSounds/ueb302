@@ -8,12 +8,11 @@
 #include <string>
 #include <cstdio>
 #include "caccount.h"
+#include <vector>
 
 using namespace std;
 
 class CAccount;
-
-#define MAX_ACCOUNTS 100
 
 class CBank{
 
@@ -21,15 +20,18 @@ private:
     string name;
     string bic;
     int count;
-    CAccount *Accounts[MAX_ACCOUNTS];
+    vector <CAccount*> Accounts;
     
 public:
     CBank(string, string);
+    ~CBank();
     
     void set(string, string);
     void print();
     bool addAccount(CAccount *newacc);
     string getbic(){return bic;};
+    
+    static CBank load(ifstream&);
     
 };
 

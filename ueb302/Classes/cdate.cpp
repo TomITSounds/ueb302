@@ -2,6 +2,9 @@
 #include <ctime>
 #include <iostream>
 #include <iomanip>
+#include "basetypeload.hpp"
+#include <string>
+#include <fstream>
 
 using namespace std;
 
@@ -37,4 +40,30 @@ void CDate::print(){
     << setw(2) << Month
     << "."
     << setw(4) << Year << endl;
+}
+
+CDate CDate::load(ifstream& data, string endtag){
+    string line;
+    CDate date;
+    
+    do{
+        if(data.eof()){
+            cout<<"Datei fehlerhaft CDate"<<endl;
+        }
+        
+        getline(data>>ws, line);
+        line.pop_back();
+        
+        if(line.substr(0, 5)=="<Day>")
+            basetypeload::load(line, "</Day>", &(date.Day));
+        
+        if(line.substr(0, 7)=="<Month>")
+            basetypeload::load(line, "</Month>", &(date.Month));
+        
+        if(line.substr(0, 6)=="<Year>")
+            basetypeload::load(line, "</Year>", &(date.Year));
+            
+    }while(line != endtag);
+    
+    return date;
 }
