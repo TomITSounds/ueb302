@@ -31,14 +31,12 @@ CBankManager::CBankManager(string file){
     //data.open(file, ios::in);
     string line;
     
-
     CCustomer *newcus = NULL;
     CBank *newbank = NULL;
     CAccount *newacc = NULL;
     CCurrentAccount *newcuracc = NULL;
     CSavingsAccount *newsavacc = NULL;
-    CFixedDepositAccount *newfixacc = NULL;
-    CMoney dispodummy;
+    CFixedDepositAccount *newfixacc = NULL; //Koeente man auch ein Void pointer fuer alle nehmen??
     
     do{
         if(pdata.eof()){
@@ -65,25 +63,31 @@ CBankManager::CBankManager(string file){
         if(line == "<Account>"){
             newacc = new CAccount(CAccount::load(pdata, "</Account>"));
             //pushback
+            
             newacc = NULL;
         }
         
         if(line == "<CurrentAccount>"){
             newcuracc = new CCurrentAccount(CCurrentAccount::load(pdata, "</CurrentAccount>"));
-            //pushback
+            newcuracc->getOwner()->replaceLastAccount(newcuracc);
+            // Ersetz Adresse in Owner Account Liste da diese auf Stack zeigt (return by value)
+            newcuracc->getbank()->replaceLastAccount(newcuracc); //Same in Bank
             newcuracc = NULL;
         }
         
         if(line == "<SavingsAccount>"){
             newsavacc = new CSavingsAccount(CSavingsAccount::load(pdata, "</SavingsAccount>"));
-            //pushback
+            newsavacc->getOwner()->replaceLastAccount(newsavacc);
+            // Ersetz Adresse in Owner Account Liste da diese auf Stack zeigt (return by value)
+            newsavacc->getbank()->replaceLastAccount(newsavacc); //Same in Bank
             newsavacc = NULL;
         }
         
         if(line == "<FixedDepositAccount>"){
-            dispolist.push_back(dispodummy);
             newfixacc = new CFixedDepositAccount(CFixedDepositAccount::load(pdata));
-            //pushback
+            newfixacc->getOwner()->replaceLastAccount(newfixacc);
+            // Ersetz Adresse in Owner Account Liste da diese auf Stack zeigt (return by value)
+            newfixacc->getbank()->replaceLastAccount(newfixacc); //Same in Bank
             newfixacc = NULL;
         }
         

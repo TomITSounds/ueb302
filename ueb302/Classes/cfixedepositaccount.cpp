@@ -19,13 +19,17 @@ using namespace std;
 CFixedDepositAccount::CFixedDepositAccount(CCurrentAccount base, double rate)
 :   CAccount(base.bank, base.IBAN, base.Owner, base.Balance),
     CCurrentAccount(base),
-    CSavingsAccount(base.bank, base.IBAN, base.Owner, base.Balance, rate){}
+    CSavingsAccount(base.bank, base.IBAN, base.Owner, base.Balance, rate){
+        bank->replaceLastAccount(this);
+        Owner->replaceLastAccount(this);
+    }
 
 CFixedDepositAccount::CFixedDepositAccount(CAccount base, double rate, CMoney* dispo)
-:CAccount(base), CCurrentAccount(base, dispo), CSavingsAccount(base, rate){}
+:CAccount(base), CCurrentAccount(base, dispo), CSavingsAccount(base, rate){
+}
 
 CFixedDepositAccount::~CFixedDepositAccount(){
-    cout << "FixedDepositAccount:     Konto (" << flush;
+    cout << "FixedDepositAccount:Konto (" << flush;
     printIBAN();
     cout << ") vernichtet!" << endl;
 }
@@ -47,7 +51,8 @@ CFixedDepositAccount CFixedDepositAccount::load(ifstream &pdata){
         line.pop_back();
         
         if(line.substr(0, 14) == "<InterestRate>")
-            interest = basetypeload::loaddouble(line, sizeof("</InterestRate>"));
+            interest = basetypeload::loaddouble(line, 15);
+        
     
     }while (line != "</FixedDepositAccount>");
     

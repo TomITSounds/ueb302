@@ -28,7 +28,8 @@ public:
     
     void set(string, string);
     void print();
-    bool addAccount(CAccount *newacc);
+    bool addAccount(CAccount *);
+    void replaceLastAccount(CAccount*);
     string getbic(){return bic;};
     
     static CBank load(ifstream&);

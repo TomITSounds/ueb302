@@ -32,7 +32,9 @@ public:
     void set(string IBAN, CCustomer *Owner, CMoney Balance);
     virtual void print();
     void printIBAN();
-    CMoney getBalance(){return Balance;};
+    string getIBAN(){return IBAN;}
+    CMoney getBalance(){return Balance;}
+    CBank* getbank(){return bank;}
     
     static CAccount load(ifstream&, string);
      

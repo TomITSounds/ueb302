@@ -79,12 +79,23 @@ void CBank::print(){
 
 bool CBank::addAccount(CAccount *newacc){
     if(newacc){
-        Accounts.push_back(newacc);
-        return true;
+        if(Accounts.size()){
+            if(newacc->getIBAN() != Accounts.back()->getIBAN()){
+                Accounts.push_back(newacc);
+                return true;
+            }
+        }
+        else{
+            Accounts.push_back(newacc);
+            return true;
+        }
     }
     return false;
 }
 
+void CBank::replaceLastAccount(CAccount *newacc){
+    Accounts.back() = newacc;
+}
 CBank CBank::load(ifstream &pdata){
     string name;
     string bic;
@@ -100,10 +111,10 @@ CBank CBank::load(ifstream &pdata){
         line.pop_back();
         
         if(line.substr(0, 6)=="<Name>")
-            basetypeload::loadstr(name, sizeof("</Name>"));
+            name = basetypeload::loadstr(line, 7);
             
         if(line.substr(0, 5)=="<BIC>")
-            basetypeload::loadstr(bic, sizeof("</BIC>"));
+            bic = basetypeload::loadstr(line, 6);
     
     }while (line != "</Bank>");
     

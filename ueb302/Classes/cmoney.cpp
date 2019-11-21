@@ -54,10 +54,10 @@ CMoney CMoney::load(ifstream &pdata, string endtag){
         line.pop_back();
         
         if(line.substr(0, 8)=="<Amount>")
-            amount = basetypeload::loaddouble(line, sizeof("</Amount>"));
+            amount = basetypeload::loaddouble(line, 9);
         
         if(line.substr(0, 10)=="<Currency>")
-            basetypeload::loadstr(currency, sizeof"</Currency>");
+            currency = basetypeload::loadstr(line, 11);
     
     } while(line != endtag);
     

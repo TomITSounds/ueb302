@@ -14,7 +14,10 @@ CCurrentAccount::CCurrentAccount(CBank *bank, string IBAN, CCustomer *Owner, CMo
 : dispo(dispo), CAccount(bank, IBAN, Owner, Balance){}
 
 CCurrentAccount::CCurrentAccount(CAccount topclass, CMoney *dispo): CAccount(topclass),
-dispo(dispo){}
+dispo(dispo){
+    bank->replaceLastAccount(this);
+    Owner->replaceLastAccount(this);
+}
 
 CCurrentAccount::CCurrentAccount(const CCurrentAccount& copy): CAccount(copy.bank, copy.IBAN, copy.Owner, copy.Balance), dispo(copy.dispo){}
 
@@ -38,7 +41,7 @@ void CCurrentAccount::print(){
 CCurrentAccount CCurrentAccount::load(ifstream &pdata, string endtag){
     string line;
     int ret = pdata.tellg();
-    int i;
+    int i=0;
     CMoney* dispo= NULL;
     
     do{
@@ -52,22 +55,28 @@ CCurrentAccount CCurrentAccount::load(ifstream &pdata, string endtag){
         
         if(line.substr(0, 7)=="<Dispo>"){
             dispo = new CMoney(CMoney::load(pdata,"</Dispo>"));
-            for(i=0; i<CBankManager::dispolistsize(); i++){
-                if(CBankManager::dispolist.at(i).getAmount()==dispo->getAmount())
-                    if(CBankManager::dispolist.at(i).getCurrency()==dispo->getCurrency()){
-                    break; //falls Dispo betrag schon vorhanden, i=pos im Vektor
-                }
-                else{
-                    i++; //falls nicht vorhanden, i = letzte pos neue groesse
+                if(!CBankManager::dispolistsize())
                     CBankManager::dispolist.push_back(*dispo);
+                else{
+                    for(i=0; i<CBankManager::dispolistsize(); i++){
+                        if(CBankManager::dispolist.at(i).getAmount()==dispo->getAmount()){
+                            if(CBankManager::dispolist.at(i).getCurrency()==dispo->getCurrency()){
+                                delete dispo;
+                                break; //falls Dispo betrag schon vorhanden, i=pos im Vektor
+                            }
+                        }
+                        else{
+                            CBankManager::dispolist.push_back(*dispo);
+                            break; //i++; //falls nicht vorhanden, i = letzte pos neue groesse
+                        }
+                    }
                 }
-            }
         }
     }while(line != endtag);
     
-    delete dispo;
+    
     
     pdata.seekg(ret);
     
-    return CCurrentAccount(CAccount::load(pdata, "CurrentAccount"), &CBankManager::dispolist.at(i));
+    return CCurrentAccount(CAccount::load(pdata, endtag), &CBankManager::dispolist.at(i));
 }

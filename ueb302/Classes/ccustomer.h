@@ -33,6 +33,7 @@ public:
     void print();
     string getName(){return Name;};
     bool addAccount(CAccount *New);
+    void replaceLastAccount(CAccount*);
     static CCustomer load(ifstream&);
 };
 

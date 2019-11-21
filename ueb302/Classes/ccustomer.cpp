@@ -45,17 +45,29 @@ void CCustomer::print(){
 }
 
 bool CCustomer::addAccount(CAccount *New){
-    if(New){    //checks for Null
-        Accounts.push_back(New);           //Hinzufuegen zu Zeigerarray
-        return true;
+    if(New){
+        if(Accounts.size()){
+            if(New->getIBAN() != Accounts.back()->getIBAN()){    //checks for Null
+                Accounts.push_back(New);           //Hinzufuegen zu Zeigerarray
+                return true;
+            }
+        }
+        else{
+            Accounts.push_back(New);           //Hinzufuegen zu Zeigerarray
+            return true;
+        }
     }
     return false;
+}
+
+void CCustomer::replaceLastAccount(CAccount *newacc){
+    Accounts.back() = newacc;
 }
 
 CCustomer CCustomer::load(ifstream &pdata){
     string line, name;
     long id;
-    int posadd, posdob;
+    int ret = pdata.tellg();
     
     do{
         if(pdata.eof()){
@@ -65,24 +77,25 @@ CCustomer CCustomer::load(ifstream &pdata){
         getline(pdata>>ws, line);
         line.pop_back();
         
-        if(line.substr(0, 9)=="<Address>"){
+        /*if(line.substr(0, 9)=="<Address>"){
             posadd = pdata.tellg();
             
-        }
+        }*/
         if(line.substr(0, 6)=="<Name>"){
-            basetypeload::loadstr(line, sizeof("<Name>"));
+            basetypeload::loadstr(line, 7);
             name = line;
         }
-        if(line.substr(0, 10)=="<Birthday>"){
+        /*if(line.substr(0, 10)=="<Birthday>"){
             posdob = pdata.tellg();
             
-        }
+        }*/
         if(line.substr(0, 4)=="<ID>"){
-            id = basetypeload::loadlong(line, sizeof("</ID>"));
+            id = basetypeload::loadlong(line, 5);
         }
     }while (line != "</Customer>");
     
-    pdata.seekg(posadd);
+    pdata.seekg(ret);
+    
     return CCustomer(id, name,
                      CAddress::load(pdata, "</Address>"),
                      CDate::load(pdata, "</Birthday>"));

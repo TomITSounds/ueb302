@@ -19,7 +19,7 @@ class CSavingsAccount;
 class CCurrentAccount;
 
 
-class CFixedDepositAccount:  public CCurrentAccount, public CSavingsAccount{
+class CFixedDepositAccount:  virtual public CCurrentAccount, virtual public CSavingsAccount{
     
 public:
     CFixedDepositAccount(CCurrentAccount, double);
@@ -27,7 +27,7 @@ public:
     virtual ~CFixedDepositAccount() ;
     
     void print() ;
-    void printIBAN(){};
+    //void printIBAN(){};
     static CFixedDepositAccount load(ifstream&);
 };
 

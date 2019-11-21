@@ -47,13 +47,13 @@ CAddress CAddress::load(ifstream &pdata, string endtag){
         line.pop_back();
         
         if(line.substr(0, 8)=="<Street>")
-            street = basetypeload::loadstr(line, sizeof("</Street>"));
+            street = basetypeload::loadstr(line, 9);
         
         if(line.substr(0, 10)=="<Postcode>")
-            zip = basetypeload::loadstr(line, sizeof("</Postcode>"));
+            zip = basetypeload::loadstr(line, 11);
         
         if(line.substr(0, 6)=="<Town>")
-            city = basetypeload::loadstr(line, sizeof("</Town>"));
+            city = basetypeload::loadstr(line, 7);
             
     }while(line != endtag);
     

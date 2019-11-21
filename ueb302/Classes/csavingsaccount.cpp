@@ -12,7 +12,10 @@ using namespace std;
 CSavingsAccount::CSavingsAccount(CBank *bank, string IBAN, CCustomer *Owner, CMoney Balance, double interest)
 : interest(interest), CAccount(bank, IBAN, Owner, Balance){};
 
-CSavingsAccount::CSavingsAccount(CAccount topclass, double interest): CAccount(topclass), interest(interest){}
+CSavingsAccount::CSavingsAccount(CAccount topclass, double interest): CAccount(topclass), interest(interest){
+    bank->replaceLastAccount(this);
+    Owner->replaceLastAccount(this);
+}
 
 CSavingsAccount::CSavingsAccount(const CSavingsAccount& copy): CAccount(copy.bank, copy.IBAN, copy.Owner, copy.Balance), interest(copy.interest){}
 
@@ -46,7 +49,7 @@ CSavingsAccount CSavingsAccount::load(ifstream &pdata, string endtag){
             line.pop_back();
             
             if(line.substr(0, 14)=="<InterestRate>"){
-                intrate = basetypeload::loaddouble(line, sizeof("</InterestRate>"));
+                intrate = basetypeload::loaddouble(line, 15);
             }
             
         }while(line != endtag);
