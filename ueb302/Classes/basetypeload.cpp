@@ -15,61 +15,33 @@
 using namespace std;
 
 
-string basetypeload::load(string line, string tag, string* result){
-
-    int tagsize = tag.size();
-    
+string basetypeload::loadstr(string& line, int tagsize){
             line.erase(0,tagsize-1); //Anfangstag loeschen
             line.erase((line.size()-tagsize), tagsize); // Endtag loeschen
-            if(result)
-                *result = line;
-            else
-                result = new string (line);
-
-    return *result;
-}
+    return line;
+}//oder ist hier return by value via string loadstr(): besser?
     
-long basetypeload::load(string line, string tag, long* result){
-    
-    int tagsize = tag.size();
-    
-            line.erase(0,tagsize-1); //Anfangstag loeschen
-            line.erase((line.size()-tagsize), tagsize); // Endtag loeschen
-            if(result)
-                *result = stoi(line);
-            else
-                result = new long (stoi(line));
-
-    return *result;
+long basetypeload::loadlong(string& line, int tagsize){
+line.erase(0,tagsize-1); //Anfangstag loeschen
+line.erase((line.size()-tagsize), tagsize); // Endtag loeschen
+    return stol(line);
 
 }
     
-int basetypeload::load(string line, string tag, int* result){
-     
-    int tagsize = tag.size();
-    
-            line.erase(0,tagsize-1); //Anfangstag loeschen
-            line.erase((line.size()-tagsize), tagsize); // Endtag loeschen
-            if(result)
-                *result = stoi(line);
-            else
-                result = new int (stoi(line));
+int basetypeload::loadint(string& line, int tagsize){
+line.erase(0, (tagsize-1)); //Anfangstag loeschen
+line.erase((line.size()-tagsize), tagsize); // Endtag loeschen
 
-    return *result;
+    return stoi(line);
+    
+
 }
     
-double basetypeload::load(string line, string tag, double* result){
-       
-       int tagsize = tag.size();
-       
-               line.erase(0,tagsize-1); //Anfangstag loeschen
-               line.erase((line.size()-tagsize), tagsize); // Endtag loeschen
-               if(result)
-                   *result = stod(line);
-               else
-                   result = new double (stod(line));
+double basetypeload::loaddouble(string& line, int tagsize){
+line.erase(0,tagsize-1); //Anfangstag loeschen
+line.erase((line.size()-tagsize), tagsize); // Endtag loeschen
 
-       return *result;
+       return stod(line);
 }
     
     

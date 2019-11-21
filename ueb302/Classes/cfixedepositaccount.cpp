@@ -31,36 +31,29 @@ CFixedDepositAccount::~CFixedDepositAccount(){
 }
 
 
-CFixedDepositAccount CFixedDepositAccount::load(ifstream& data, CMoney* dispolist, int listsize){
+CFixedDepositAccount CFixedDepositAccount::load(ifstream &pdata){
+    
+    int ret = pdata.tellg();
     string line;
-    long long pos = data.tellg();
-    double* interest = NULL;
-    
-    CCurrentAccount* dummy = NULL;
-    CAccount *dummy2 = NULL;
-    
-    dummy = new CCurrentAccount(CCurrentAccount::load(data, "</FixedDepositAccount>", dispolist, listsize));
-    
-    data.seekg(pos);
+    double interest;
     
     do{
-        if(data.eof()){
+        if(pdata.eof()){
             cout << "Datei fehlerhaft FixDepo"<<endl;
             break;
         }
         
-        getline(data>>ws, line);
+        getline(pdata>>ws, line);
         line.pop_back();
         
         if(line.substr(0, 14) == "<InterestRate>")
-            interest = new double(basetypeload::load(line, "</InterestRate>", interest));
+            interest = basetypeload::loaddouble(line, sizeof("</InterestRate>"));
     
     }while (line != "</FixedDepositAccount>");
     
-    dummy2 = dummy;
-
-    CFixedDepositAccount ret(*dummy2, *interest, dummy->dispo);
-    return ret;
+    pdata.seekg(ret);
+    
+    return CFixedDepositAccount(CCurrentAccount::load(pdata, "</FixedDepositAccount>"), interest);
 }
 
 void CFixedDepositAccount::print(){

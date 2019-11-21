@@ -52,36 +52,39 @@ bool CCustomer::addAccount(CAccount *New){
     return false;
 }
 
-CCustomer CCustomer::load(ifstream &data){
-    string line;
-    long *CusNr = NULL;
-    string *Name = NULL;
-    CDate *DOB = NULL;
-    CAddress *add =NULL;
+CCustomer CCustomer::load(ifstream &pdata){
+    string line, name;
+    long id;
+    int posadd, posdob;
     
     do{
-        if(data.eof()){
+        if(pdata.eof()){
             cout << "Datei fehlerhaft Customer"<<endl;
             break;
         }
-        getline(data>>ws, line);
+        getline(pdata>>ws, line);
         line.pop_back();
         
         if(line.substr(0, 9)=="<Address>"){
-            add = new CAddress(CAddress::load(data, "</Address>"));
+            posadd = pdata.tellg();
+            
         }
         if(line.substr(0, 6)=="<Name>"){
-            Name = new string (basetypeload::load(line, "</Name>", Name));
+            basetypeload::loadstr(line, sizeof("<Name>"));
+            name = line;
         }
         if(line.substr(0, 10)=="<Birthday>"){
-            DOB = new CDate (CDate::load(data, "</Birthday>"));
+            posdob = pdata.tellg();
+            
         }
         if(line.substr(0, 4)=="<ID>"){
-            CusNr = new long (basetypeload::load(line, "</ID>", CusNr));
+            id = basetypeload::loadlong(line, sizeof("</ID>"));
         }
-        
     }while (line != "</Customer>");
     
-    return CCustomer( *CusNr,  *Name,  *add,  *DOB);
+    pdata.seekg(posadd);
+    return CCustomer(id, name,
+                     CAddress::load(pdata, "</Address>"),
+                     CDate::load(pdata, "</Birthday>"));
 }
 

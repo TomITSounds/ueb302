@@ -28,5 +28,10 @@ public:
     void lprint();
     
     static CMoney load(ifstream&, string);
-};
+    
+        /*friend bool operator== (const CMoney &m1, const CMoney &m2);
+        friend bool operator!= (const CMoney &m1, const CMoney &m2);*/
+    };
+     
+
 #endif /* cmoney_hpp */

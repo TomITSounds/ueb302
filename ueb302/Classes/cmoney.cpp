@@ -39,28 +39,40 @@ void CMoney::lprint(){
             << endl;
 }
 
-CMoney CMoney::load(ifstream& data, string endtag){
+CMoney CMoney::load(ifstream &pdata, string endtag){
     string line;
-    string *currency = NULL;
-    double *amount = NULL;
-    
-    
+    double amount;
+    string currency;
+    int ret = pdata.tellg();
+
     do{
-        if(data.eof()){
+        if(pdata.eof()){
             cout << "Datei fehlerhaft CMoney"<<endl;
             break;
         }
-        getline(data>>ws, line);
+        getline(pdata>>ws, line);
         line.pop_back();
         
         if(line.substr(0, 8)=="<Amount>")
-            amount = new double(basetypeload::load(line, "</Amount>", amount));
+            amount = basetypeload::loaddouble(line, sizeof("</Amount>"));
         
         if(line.substr(0, 10)=="<Currency>")
-            currency = new string(basetypeload::load(line, "</Currency>", currency));
+            basetypeload::loadstr(currency, sizeof"</Currency>");
     
     } while(line != endtag);
     
-    CMoney ret(*amount, *currency);
-    return ret;
+    pdata.seekg(ret);
+    
+    return CMoney(amount, currency);
 }
+
+ /*bool CMoney::operator==(const CMoney &m1, const CMoney &m2)
+{
+    return (m1.Amount == m2.Amount &&
+            m2.Currency == m2.Currency);
+}
+ 
+ bool CMoney::operator!=(const CMoney &m1, const CMoney &m2)
+{
+    return !(m1 == m2);
+}*/

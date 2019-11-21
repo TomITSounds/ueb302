@@ -1,11 +1,3 @@
-//
-//  cbankmanager.cpp
-//  ueb302
-//
-//  Created by Tom Mertens on 17.11.19.
-//  Copyright © 2019 Tom Mertens. All rights reserved.
-//
-
 #include "cbankmanager.h"
 #include <stdio.h>
 #include "cbank.h"
@@ -26,19 +18,20 @@ vector <CBank*> CBankManager::banklist;
 vector <CMoney> CBankManager::dispolist;
 
 CBankManager::CBankManager(string file){
-    ifstream data("/Volumes/Data/Beuth/3. Semester/Info 3/Ueb/ueb302/ueb302/Classes/"+file);
+    ifstream pdata("/Volumes/Data/Beuth/3. Semester/Info 3/Ueb/ueb302/ueb302/Classes/"+file);
     
-    if(data.is_open())
+    if(pdata.is_open())
         cout << "Datei geoeffnet" << endl;
     else{
         cout << "Datei nicht geoeffnet"<< endl;
         return;
     }
+    /*ifstream* pdata = NULL;
+    pdata = &data;*/
     //data.open(file, ios::in);
     string line;
     
 
-    
     CCustomer *newcus = NULL;
     CBank *newbank = NULL;
     CAccount *newacc = NULL;
@@ -48,56 +41,56 @@ CBankManager::CBankManager(string file){
     CMoney dispodummy;
     
     do{
-        if(data.eof()){
+        if(pdata.eof()){
             cout << "Datei fehlerhaft BankManager" << endl;
-            break;
+            return;
         }
         
-        getline(data >>ws, line);
+        getline(pdata >>ws, line);
         line.pop_back(); //Da testfile has \r\n
         
         if(line == "<Customer>"){
             
-            newcus = new CCustomer(CCustomer::load(data));
+            newcus = new CCustomer(CCustomer::load(pdata));
             cuslist.push_back(newcus);
             newcus = NULL;
         }
         
         if(line == "<Bank>"){
-            newbank = new CBank(CBank::load(data));
+            newbank = new CBank(CBank::load(pdata));
             banklist.push_back(newbank);
             newbank = NULL;
         }
         
         if(line == "<Account>"){
-            newacc = new CAccount(CAccount::load(data, "</Account>"));
+            newacc = new CAccount(CAccount::load(pdata, "</Account>"));
             //pushback
             newacc = NULL;
         }
         
         if(line == "<CurrentAccount>"){
-            dispolist.push_back(dispodummy);
-            newcuracc = new CCurrentAccount(CCurrentAccount::load(data, "</CurrentAccount>", &dispolist[0], dispolist.size()));
+            newcuracc = new CCurrentAccount(CCurrentAccount::load(pdata, "</CurrentAccount>"));
             //pushback
             newcuracc = NULL;
         }
         
         if(line == "<SavingsAccount>"){
-            newsavacc = new CSavingsAccount(CSavingsAccount::load(data, "</SavingsAccount>"));
+            newsavacc = new CSavingsAccount(CSavingsAccount::load(pdata, "</SavingsAccount>"));
             //pushback
             newsavacc = NULL;
         }
         
         if(line == "<FixedDepositAccount>"){
             dispolist.push_back(dispodummy);
-            newfixacc = new CFixedDepositAccount(CFixedDepositAccount::load(data,&dispolist[0], dispolist.size()));
+            newfixacc = new CFixedDepositAccount(CFixedDepositAccount::load(pdata));
             //pushback
             newfixacc = NULL;
         }
         
-    } while(line != "</Data>");
-    
+    }while(line != "</Data>");
+
     cout<<"Datei wurde eingelesen!"<<endl;
+    
 }
 
 CBankManager::~CBankManager(){

@@ -31,35 +31,27 @@ void CSavingsAccount::print(){
     cout.flags(oldflag);
 }
 
-CSavingsAccount CSavingsAccount::load(ifstream& data, string endtag){
-
-        string line;
-        long long pos = data.tellg();
-        
-        CAccount *dummy = NULL;
-        double *intrate = NULL;
-        
-        dummy = new CAccount(CAccount::load(data, "</SavingsAccount>"));
-        
-        
-    data.seekg(pos);
+CSavingsAccount CSavingsAccount::load(ifstream &pdata, string endtag){
+    int ret = pdata.tellg();
+    string line;
+    double intrate;
         
         do{
-            if(data.eof()){
+            if(pdata.eof()){
                 cout << "Datei fehlerhaft SAvings"<<endl;
                 break;
             }
             
-            getline(data>>ws, line);
+            getline(pdata>>ws, line);
             line.pop_back();
             
             if(line.substr(0, 14)=="<InterestRate>"){
-                intrate = new double(basetypeload::load(line, "</InterestRate>", intrate));
+                intrate = basetypeload::loaddouble(line, sizeof("</InterestRate>"));
             }
             
         }while(line != endtag);
-        
-        CSavingsAccount ret(*dummy, *intrate);
-        
-        return ret;
+                                     
+    pdata.seekg(ret);
+                                     
+        return CSavingsAccount(CAccount::load(pdata, "</SavingsAccount>"), intrate);
     }

@@ -28,7 +28,7 @@ public:
     
     void print() ;
     void printIBAN(){};
-    static CFixedDepositAccount load(ifstream&, CMoney*, int);
+    static CFixedDepositAccount load(ifstream&);
 };
 
 #endif /* cfixedeposit_hpp */

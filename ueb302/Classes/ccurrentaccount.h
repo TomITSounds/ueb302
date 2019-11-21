@@ -19,7 +19,7 @@ public:
     
     void print();
     
-    static CCurrentAccount load(ifstream&, string, CMoney*, int);
+    static CCurrentAccount load(ifstream&, string);
     
     friend class CFixedDepositAccount;
 };

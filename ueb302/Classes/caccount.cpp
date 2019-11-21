@@ -58,41 +58,40 @@ void CAccount::print(){
     cout.flags(oldflag);
 }
 
-CAccount CAccount::load(ifstream& data, string endtag){
+CAccount CAccount::load(ifstream &pdata, string endtag){
     string line;
-    string *iban = NULL;
+    string iban;
     CCustomer *owner = NULL;
-    CBank *bank = NULL;
-    CMoney *amount = NULL;
-    string bankcmp;
-    long idcmp;
-    
+    CBank *bank =NULL;
+    int posmoney;
     do{
-        if(data.eof()){
+        if(pdata.eof()){
             cout << "Datei fehlerhaft Account"<<endl;
             break;
         }
         
-        getline(data>>ws, line);
+        getline(pdata>>ws, line);
         line.pop_back();
         
         if(line.substr(0, 6) == "<IBAN>")
-            iban = new string(basetypeload::load(line, "</IBAN>", iban));
+            basetypeload::loadstr(iban, sizeof("</IBAN>"));
         
         if(line.substr(0, 9) == "<Balance>")
-            amount = new CMoney(CMoney::load(data, "</Balance>"));
+            posmoney = pdata.tellg();
         
         if(line.substr(0, 6) == "<Bank>"){
-            basetypeload::load(line, "</Bank>", &bankcmp);
-            bank = CBankManager::getbankptr(bankcmp);
+            basetypeload::loadstr(line, sizeof("</Bank>"));
+            bank = CBankManager::getbankptr(line);
         }
         if(line.substr(0, 10) == "<Customer>"){
-                   basetypeload::load(line, "</Customer>", &idcmp);
-                   owner = CBankManager::getcusptr(idcmp);
+            basetypeload::loadstr(line, sizeof("</Customer>"));
+            owner = CBankManager::getcusptr(stol(line));
                }
         
     }while(line != endtag);
     
-    CAccount ret(bank, *iban, owner, *amount);
-    return ret;
+    pdata.seekg(posmoney);
+    
+    return CAccount(bank,iban, owner,
+                    CMoney::load(pdata, "</Balance>"));
 }

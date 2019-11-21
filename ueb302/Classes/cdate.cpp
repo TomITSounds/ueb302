@@ -42,28 +42,31 @@ void CDate::print(){
     << setw(4) << Year << endl;
 }
 
-CDate CDate::load(ifstream& data, string endtag){
+CDate CDate::load(ifstream &pdata, string endtag){
     string line;
-    CDate date;
+    int day, month, year;
+    int ret = pdata.tellg();
     
     do{
-        if(data.eof()){
+        if(pdata.eof()){
             cout<<"Datei fehlerhaft CDate"<<endl;
         }
         
-        getline(data>>ws, line);
+        getline(pdata>>ws, line);
         line.pop_back();
         
         if(line.substr(0, 5)=="<Day>")
-            basetypeload::load(line, "</Day>", &(date.Day));
+            day = basetypeload::loadint(line,6);
         
         if(line.substr(0, 7)=="<Month>")
-            basetypeload::load(line, "</Month>", &(date.Month));
+            month = basetypeload::loadint(line, 8);
         
         if(line.substr(0, 6)=="<Year>")
-            basetypeload::load(line, "</Year>", &(date.Year));
+            year = basetypeload::loadint(line, 7);
             
     }while(line != endtag);
     
-    return date;
+    pdata.seekg(ret);
+    
+    return CDate(day, month, year);
 }

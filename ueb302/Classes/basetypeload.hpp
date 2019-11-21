@@ -17,13 +17,13 @@ using namespace std;
 
 class basetypeload{
 public:
-    static string load(string, string, string* =NULL);
+    static string loadstr(string&, int);
     
-    static long load(string, string, long* =NULL);
+    static long loadlong(string&, int);
     
-    static int load(string, string, int* =NULL);
+    static int loadint(string&, int);
     
-    static double load(string, string, double* =NULL);
+    static double loaddouble(string&, int);
     
     
 };

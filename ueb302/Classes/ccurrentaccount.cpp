@@ -6,6 +6,7 @@
 #include <iomanip>
 #include <fstream>
 #include "cmoney.h"
+#include "cbankmanager.h"
 
 using namespace std;
 
@@ -34,47 +35,39 @@ void CCurrentAccount::print(){
     cout.flags(oldflag);
 }
 
-CCurrentAccount CCurrentAccount::load(ifstream& data, string endtag, CMoney *dispolist, int listsize){
+CCurrentAccount CCurrentAccount::load(ifstream &pdata, string endtag){
     string line;
-    long long pos = data.tellg();
+    int ret = pdata.tellg();
     int i;
-    
-    CAccount *dummy = NULL;
-    CMoney *dispo =NULL;
-    
-    dummy = new CAccount(CAccount::load(data, endtag));
-    
-    data.seekg(pos);
+    CMoney* dispo= NULL;
     
     do{
-        if(data.eof()){
+        if(pdata.eof()){
             cout << "Datei fehlerhaft Currentaccount"<<endl;
             break;
         }
         
-        getline(data>>ws, line);
+        getline(pdata>>ws, line);
         line.pop_back();
         
         if(line.substr(0, 7)=="<Dispo>"){
-            dispo = new CMoney(CMoney::load(data,"</Dispo>"));
+            dispo = new CMoney(CMoney::load(pdata,"</Dispo>"));
+            for(i=0; i<CBankManager::dispolistsize(); i++){
+                if(CBankManager::dispolist.at(i).getAmount()==dispo->getAmount())
+                    if(CBankManager::dispolist.at(i).getCurrency()==dispo->getCurrency()){
+                    break; //falls Dispo betrag schon vorhanden, i=pos im Vektor
+                }
+                else{
+                    i++; //falls nicht vorhanden, i = letzte pos neue groesse
+                    CBankManager::dispolist.push_back(*dispo);
+                }
+            }
         }
-        
     }while(line != endtag);
     
-    for(i=0; i<listsize; i++){
-        if((dispolist+i)->getAmount()==dispo->getAmount())
-            if((dispolist+i)->getCurrency()==dispo->getCurrency()){
-                dispo = (dispolist+1);
-                break;
-            }
-        else
-            if(i==4)
-                (dispolist+4)->set(*dispo);
-                
-    }
-    delete dispo; //Speicherwiederfreigeben da Dispobetrag schon existiert
+    delete dispo;
     
-    CCurrentAccount ret(*dummy, (dispolist+i));
+    pdata.seekg(ret);
     
-    return ret;
+    return CCurrentAccount(CAccount::load(pdata, "CurrentAccount"), &CBankManager::dispolist.at(i));
 }

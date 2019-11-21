@@ -85,28 +85,27 @@ bool CBank::addAccount(CAccount *newacc){
     return false;
 }
 
-CBank CBank::load(ifstream &data){
-    string *name = NULL;
-    string *bic = NULL;
+CBank CBank::load(ifstream &pdata){
+    string name;
+    string bic;
     string line;
     
     do{
-        if(data.eof()){
+        if(pdata.eof()){
             cout << "Datei fehlerhaft Bank"<<endl;
             break;
         }
         
-        getline(data>>ws, line);
+        getline(pdata>>ws, line);
         line.pop_back();
         
         if(line.substr(0, 6)=="<Name>")
-            name = new string(basetypeload::load(line, "</Name>", name));
+            basetypeload::loadstr(name, sizeof("</Name>"));
             
         if(line.substr(0, 5)=="<BIC>")
-            bic = new string (basetypeload::load(line, "</BIC>", bic));
+            basetypeload::loadstr(bic, sizeof("</BIC>"));
     
     }while (line != "</Bank>");
     
-    CBank bank(*name, *bic);
-    return bank;
+    return CBank(name, bic);
 }

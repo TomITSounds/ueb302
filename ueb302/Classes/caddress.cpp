@@ -6,10 +6,8 @@
 
 using namespace std;
 
-CAddress::CAddress(string Street, string Zip, string City){
-    this->Street = Street;
-    this->Zip = Zip;
-    this-> City = City;
+CAddress::CAddress(string Street, string Zip, string City):Street(Street), City(City), Zip(Zip)
+{
 }
 
 CAddress::CAddress(const CAddress& old): Street(old.Street), Zip(old.Zip), City(old.City){// *this= old aequivalent?}
@@ -36,32 +34,30 @@ void CAddress::print(){
     cout << endl;
 }
 
-CAddress CAddress::load(ifstream& data, string endtag){
-    string line;
-    string *street = NULL;
-    string *zip = NULL;
-    string *city = NULL;
-    
+CAddress CAddress::load(ifstream &pdata, string endtag){
+    string line, street, zip, city;
+    int ret = pdata.tellg();
+   
     do{
-        if(data.eof()){
+        if(pdata.eof()){
                 cout << "Datei fehlerhaft CAddress"<<endl;
                 break;
         }
-        getline(data>>ws, line);
+        getline(pdata>>ws, line);
         line.pop_back();
         
         if(line.substr(0, 8)=="<Street>")
-            street = new string(basetypeload::load(line, "</Street>", street));
+            street = basetypeload::loadstr(line, sizeof("</Street>"));
         
         if(line.substr(0, 10)=="<Postcode>")
-            zip = new string(basetypeload::load(line, "</Postcode>", zip));
+            zip = basetypeload::loadstr(line, sizeof("</Postcode>"));
         
         if(line.substr(0, 6)=="<Town>")
-            city = new string(basetypeload::load(line, "</Town>", city));
+            city = basetypeload::loadstr(line, sizeof("</Town>"));
             
     }while(line != endtag);
     
-    CAddress add(*street, *zip, *city);
+    pdata.seekg(ret);
     
-    return add;
+    return CAddress(street, zip, city);
 }

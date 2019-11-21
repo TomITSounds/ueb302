@@ -18,6 +18,8 @@
 
 using namespace std;
 
+class CCurrentAccount;
+
 class CBankManager{
 private:
     static vector <CCustomer*> cuslist;
@@ -34,6 +36,9 @@ public:
     static CBank *getbankptr(string);
     static CCustomer *getcusptr(long);
     
+    static int dispolistsize(){return CBankManager::dispolist.size();}
+    
+    friend CCurrentAccount;
     
 };
 
