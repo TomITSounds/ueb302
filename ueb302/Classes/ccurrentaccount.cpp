@@ -75,7 +75,6 @@ CCurrentAccount CCurrentAccount::load(ifstream &pdata, string endtag){
     }while(line != endtag);
     
     
-    
     pdata.seekg(ret);
     
     return CCurrentAccount(CAccount::load(pdata, endtag), &CBankManager::dispolist.at(i));

@@ -27,7 +27,6 @@ public:
     virtual ~CFixedDepositAccount() ;
     
     void print() ;
-    //void printIBAN(){};
     static CFixedDepositAccount load(ifstream&);
 };
 

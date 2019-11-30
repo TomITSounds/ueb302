@@ -19,18 +19,18 @@ string basetypeload::loadstr(string& line, int tagsize){
             line.erase(0,tagsize-1); //Anfangstag loeschen
             line.erase((line.size()-tagsize), tagsize); // Endtag loeschen
     return line;
-}//oder ist hier return by value via string loadstr(): besser?
+}
     
 long basetypeload::loadlong(string& line, int tagsize){
-line.erase(0,tagsize-1); //Anfangstag loeschen
-line.erase((line.size()-tagsize), tagsize); // Endtag loeschen
+    line.erase(0,tagsize-1); //Anfangstag loeschen
+    line.erase((line.size()-tagsize), tagsize); // Endtag loeschen
     return stol(line);
 
 }
     
 int basetypeload::loadint(string& line, int tagsize){
-line.erase(0, (tagsize-1)); //Anfangstag loeschen
-line.erase((line.size()-tagsize), tagsize); // Endtag loeschen
+    line.erase(0, (tagsize-1)); //Anfangstag loeschen
+    line.erase((line.size()-tagsize), tagsize); // Endtag loeschen
 
     return stoi(line);
     
@@ -38,8 +38,8 @@ line.erase((line.size()-tagsize), tagsize); // Endtag loeschen
 }
     
 double basetypeload::loaddouble(string& line, int tagsize){
-line.erase(0,tagsize-1); //Anfangstag loeschen
-line.erase((line.size()-tagsize), tagsize); // Endtag loeschen
+    line.erase(0,tagsize-1); //Anfangstag loeschen
+    line.erase((line.size()-tagsize), tagsize); // Endtag loeschen
 
        return stod(line);
 }

@@ -66,13 +66,13 @@ CMoney CMoney::load(ifstream &pdata, string endtag){
     return CMoney(amount, currency);
 }
 
- /*bool CMoney::operator==(const CMoney &m1, const CMoney &m2)
+ bool operator==(const CMoney &m1, const CMoney &m2)
 {
     return (m1.Amount == m2.Amount &&
             m2.Currency == m2.Currency);
 }
  
- bool CMoney::operator!=(const CMoney &m1, const CMoney &m2)
+ bool operator!=(const CMoney &m1, const CMoney &m2)
 {
     return !(m1 == m2);
-}*/
+}
