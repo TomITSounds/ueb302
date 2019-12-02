@@ -15,6 +15,7 @@
 #include "ccurrentaccount.h"
 #include <fstream>
 
+
 class CSavingsAccount;
 class CCurrentAccount;
 
@@ -24,10 +25,12 @@ class CFixedDepositAccount:  virtual public CCurrentAccount, virtual public CSav
 public:
     CFixedDepositAccount(CCurrentAccount, double);
     CFixedDepositAccount(CAccount, double, CMoney*);
+    CFixedDepositAccount(vector <string>&);
     virtual ~CFixedDepositAccount() ;
     
     void print() ;
-    static CFixedDepositAccount load(ifstream&);
+    static CFixedDepositAccount load(ifstream&, vector <string>&);
+    static void loadvalues(ifstream&, vector <string>&, string);
 };
 
 #endif /* cfixedeposit_hpp */

@@ -24,6 +24,7 @@ private:
     
 public:
     CBank(string, string);
+    CBank(vector<string>& loadvalues);
     ~CBank();
     
     void set(string, string);
@@ -32,7 +33,8 @@ public:
     void replaceLastAccount(CAccount*);
     string getbic(){return bic;};
     
-    static CBank load(ifstream&);
+    static CBank load(ifstream&, vector <string>&);
+    static void loadvalues(ifstream&, vector <string>&);
     
 };
 

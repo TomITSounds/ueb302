@@ -5,6 +5,7 @@
 #include "basetypeload.hpp"
 #include <string>
 #include <fstream>
+#include <vector>
 
 using namespace std;
 
@@ -18,13 +19,20 @@ CDate::CDate(){
     Day     = NowNow.tm_mday;
     
 }
+
+
     
-CDate::CDate(int Day, int Month, int Year){
-    this->Year = Year;
-    this->Month = Month;
-    this->Day = Day;
+CDate::CDate(int Day, int Month, int Year):
+    Year(Year),
+    Month(Month),
+    Day(Day){
 }
 
+CDate::CDate(vector <string>& loadvalues, int i):
+    Year(stoi(loadvalues.at(0+i))),
+    Month(stoi(loadvalues.at(1+i))),
+    Day(stoi(loadvalues.at(2+i))){
+}
 
 void CDate::setDate(int Day, int Month, int Year){
     this->Year = Year;
@@ -42,31 +50,35 @@ void CDate::print(){
     << setw(4) << Year << endl;
 }
 
-CDate CDate::load(ifstream &pdata, string endtag){
+CDate CDate::load(ifstream &pdata, vector <string>& loadvalues, int i, string endtag){
+    CDate::loadvalues(pdata, loadvalues, i, endtag);
+    return CDate(loadvalues, i);
+}
+
+void CDate::loadvalues(ifstream &pdata, vector<string> &loadvalues, int i, string endtag){
     string line;
-    int day, month, year;
-    int ret = pdata.tellg();
     
     do{
         if(pdata.eof()){
             cout<<"Datei fehlerhaft CDate"<<endl;
+            return;
         }
         
         getline(pdata>>ws, line);
         line.pop_back();
         
-        if(line.substr(0, 5)=="<Day>")
-            day = basetypeload::loadint(line,6);
-        
-        if(line.substr(0, 7)=="<Month>")
-            month = basetypeload::loadint(line, 8);
-        
-        if(line.substr(0, 6)=="<Year>")
-            year = basetypeload::loadint(line, 7);
+        if(line.substr(0, 6)=="<Year>"){
+            basetypeload::loadstr(line, 7);
+            loadvalues.at(0+i) = line;
+        }
+        if(line.substr(0, 7)=="<Month>"){
+            basetypeload::loadstr(line, 8);
+            loadvalues.at(1+i) = line;
+        }
+        if(line.substr(0, 5)=="<Day>"){
+            basetypeload::loadstr(line,6);
+            loadvalues.at(2+i) = line;
+        }
             
     }while(line != endtag);
-    
-    pdata.seekg(ret);
-    
-    return CDate(day, month, year);
 }

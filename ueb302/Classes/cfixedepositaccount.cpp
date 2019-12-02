@@ -28,6 +28,12 @@ CFixedDepositAccount::CFixedDepositAccount(CAccount base, double rate, CMoney* d
 :CAccount(base), CCurrentAccount(base, dispo), CSavingsAccount(base, rate){
 }
 
+CFixedDepositAccount::CFixedDepositAccount(vector <string>& loadvalues):
+    CAccount(loadvalues),
+    CSavingsAccount(loadvalues),
+    CCurrentAccount(loadvalues){
+}
+
 CFixedDepositAccount::~CFixedDepositAccount(){
     cout << "FixedDepositAccount:Konto (" << flush;
     printIBAN();
@@ -35,11 +41,9 @@ CFixedDepositAccount::~CFixedDepositAccount(){
 }
 
 
-CFixedDepositAccount CFixedDepositAccount::load(ifstream &pdata){
-    
-    int ret = pdata.tellg();
+CFixedDepositAccount CFixedDepositAccount::load(ifstream &pdata, vector <string> &loadvalues){
+
     string line;
-    double interest;
     
     do{
         if(pdata.eof()){
@@ -50,15 +54,26 @@ CFixedDepositAccount CFixedDepositAccount::load(ifstream &pdata){
         getline(pdata>>ws, line);
         line.pop_back();
         
-        if(line.substr(0, 14) == "<InterestRate>")
-            interest = basetypeload::loaddouble(line, 15);
+        CFixedDepositAccount::loadvalues(pdata, loadvalues, line);
         
     
     }while (line != "</FixedDepositAccount>");
     
-    pdata.seekg(ret);
     
-    return CFixedDepositAccount(CCurrentAccount::load(pdata, "</FixedDepositAccount>"), interest);
+    return CFixedDepositAccount(loadvalues);
+}
+
+void CFixedDepositAccount::loadvalues(ifstream &pdata, vector<string> &loadvalues, string line){
+    if(line.substr(0, 7)=="<Dispo>"){
+        CMoney::load(pdata, loadvalues, 5, "</Dispo>");
+        return;
+    }
+    if(line.substr(0, 14)=="<InterestRate>"){
+         basetypeload::loadstr(line, 15);
+         loadvalues.at(5) = line;
+    }
+    else
+        CAccount::loadvalues(line, loadvalues, pdata);
 }
 
 void CFixedDepositAccount::print(){

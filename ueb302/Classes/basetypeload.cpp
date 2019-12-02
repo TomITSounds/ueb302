@@ -15,34 +15,12 @@
 using namespace std;
 
 
-string basetypeload::loadstr(string& line, int tagsize){
+void basetypeload::loadstr(string& line, int tagsize){
             line.erase(0,tagsize-1); //Anfangstag loeschen
             line.erase((line.size()-tagsize), tagsize); // Endtag loeschen
-    return line;
+    return;
 }
-    
-long basetypeload::loadlong(string& line, int tagsize){
-    line.erase(0,tagsize-1); //Anfangstag loeschen
-    line.erase((line.size()-tagsize), tagsize); // Endtag loeschen
-    return stol(line);
 
-}
-    
-int basetypeload::loadint(string& line, int tagsize){
-    line.erase(0, (tagsize-1)); //Anfangstag loeschen
-    line.erase((line.size()-tagsize), tagsize); // Endtag loeschen
-
-    return stoi(line);
-    
-
-}
-    
-double basetypeload::loaddouble(string& line, int tagsize){
-    line.erase(0,tagsize-1); //Anfangstag loeschen
-    line.erase((line.size()-tagsize), tagsize); // Endtag loeschen
-
-       return stod(line);
-}
     
     
 

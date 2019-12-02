@@ -17,6 +17,7 @@ private:
 public:
     CMoney();
     CMoney(double, string = "EUR");
+    CMoney(vector <string>&, int=0);
     
     void set(double);
     void set(double, string);
@@ -27,7 +28,8 @@ public:
     void print();
     void lprint();
     
-    static CMoney load(ifstream&, string);
+    static CMoney load(ifstream&, vector <string>&, int=0, string="</Balance>");
+    static void loadvalues(ifstream&, vector <string>&, int=0, string="</Balance>");
     
         friend bool operator== (const CMoney &m1, const CMoney &m2);
         friend bool operator!= (const CMoney &m1, const CMoney &m2);

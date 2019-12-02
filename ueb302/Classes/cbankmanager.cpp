@@ -15,7 +15,7 @@ using namespace std;
 
 vector <CCustomer*> CBankManager::cuslist;
 vector <CBank*> CBankManager::banklist;
-vector <CMoney> CBankManager::dispolist;
+vector <CMoney*> CBankManager::dispolist;
 
 CBankManager::CBankManager(string file){
     ifstream pdata("/Volumes/Data/Beuth/3. Semester/Info 3/Ueb/ueb302/ueb302/Classes/"+file);
@@ -38,6 +38,8 @@ CBankManager::CBankManager(string file){
     CSavingsAccount *newsavacc = NULL;
     CFixedDepositAccount *newfixacc = NULL; //Koeente man auch ein Void pointer fuer alle nehmen??
     
+    vector <string> loadvalues(8, "");
+    
     do{
         if(pdata.eof()){
             cout << "Datei fehlerhaft BankManager" << endl;
@@ -49,26 +51,26 @@ CBankManager::CBankManager(string file){
         
         if(line == "<Customer>"){
             
-            newcus = new CCustomer(CCustomer::load(pdata));
+            newcus = new CCustomer(CCustomer::load(pdata, loadvalues));
             cuslist.push_back(newcus);
             newcus = NULL;
         }
         
         if(line == "<Bank>"){
-            newbank = new CBank(CBank::load(pdata));
+            newbank = new CBank(CBank::load(pdata, loadvalues));
             banklist.push_back(newbank);
             newbank = NULL;
         }
         
         if(line == "<Account>"){
-            newacc = new CAccount(CAccount::load(pdata, "</Account>"));
+            newacc = new CAccount(CAccount::load(pdata, loadvalues));
             //pushback
             
             newacc = NULL;
         }
         
         if(line == "<CurrentAccount>"){
-            newcuracc = new CCurrentAccount(CCurrentAccount::load(pdata, "</CurrentAccount>"));
+            newcuracc = new CCurrentAccount(CCurrentAccount::load(pdata,  loadvalues));
             newcuracc->getOwner()->replaceLastAccount(newcuracc);
             // Ersetz Adresse in Owner Account Liste da diese auf Stack zeigt (return by value)
             newcuracc->getbank()->replaceLastAccount(newcuracc); //Same in Bank
@@ -76,7 +78,7 @@ CBankManager::CBankManager(string file){
         }
         
         if(line == "<SavingsAccount>"){
-            newsavacc = new CSavingsAccount(CSavingsAccount::load(pdata, "</SavingsAccount>"));
+            newsavacc = new CSavingsAccount(CSavingsAccount::load(pdata,  loadvalues));
             newsavacc->getOwner()->replaceLastAccount(newsavacc);
             // Ersetz Adresse in Owner Account Liste da diese auf Stack zeigt (return by value)
             newsavacc->getbank()->replaceLastAccount(newsavacc); //Same in Bank
@@ -84,7 +86,7 @@ CBankManager::CBankManager(string file){
         }
         
         if(line == "<FixedDepositAccount>"){
-            newfixacc = new CFixedDepositAccount(CFixedDepositAccount::load(pdata));
+            newfixacc = new CFixedDepositAccount(CFixedDepositAccount::load(pdata, loadvalues));
             newfixacc->getOwner()->replaceLastAccount(newfixacc);
             // Ersetz Adresse in Owner Account Liste da diese auf Stack zeigt (return by value)
             newfixacc->getbank()->replaceLastAccount(newfixacc); //Same in Bank

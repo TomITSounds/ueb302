@@ -7,6 +7,7 @@
 #include <fstream>
 #include "cmoney.h"
 #include "cbankmanager.h"
+#include "basetypeload.hpp"
 
 using namespace std;
 
@@ -20,6 +21,12 @@ dispo(dispo){
 }
 
 CCurrentAccount::CCurrentAccount(const CCurrentAccount& copy): CAccount(copy.bank, copy.IBAN, copy.Owner, copy.Balance), dispo(copy.dispo){}
+
+CCurrentAccount::CCurrentAccount(vector <string>& loadvalues):
+    dispo(checkdispoptr(loadvalues, 5)),
+    CAccount(loadvalues){
+}
+    
 
 CCurrentAccount::~CCurrentAccount(){
     cout << "CurrentAccount:     Konto (" << flush;
@@ -38,11 +45,8 @@ void CCurrentAccount::print(){
     cout.flags(oldflag);
 }
 
-CCurrentAccount CCurrentAccount::load(ifstream &pdata, string endtag){
+CCurrentAccount CCurrentAccount::load(ifstream &pdata, vector <string>& loadvalues, string endtag){
     string line;
-    int ret = pdata.tellg();
-    int i=0;
-    CMoney* dispo= NULL;
     
     do{
         if(pdata.eof()){
@@ -53,29 +57,35 @@ CCurrentAccount CCurrentAccount::load(ifstream &pdata, string endtag){
         getline(pdata>>ws, line);
         line.pop_back();
         
-        if(line.substr(0, 7)=="<Dispo>"){
-            dispo = new CMoney(CMoney::load(pdata,"</Dispo>"));
-                if(!CBankManager::dispolistsize())
-                    CBankManager::dispolist.push_back(*dispo);
-                else{
-                    for(i=0; i<CBankManager::dispolistsize(); i++){
-                        if(CBankManager::dispolist.at(i).getAmount()==dispo->getAmount()){
-                            if(CBankManager::dispolist.at(i).getCurrency()==dispo->getCurrency()){
-                                delete dispo;
-                                break; //falls Dispo betrag schon vorhanden, i=pos im Vektor
-                            }
-                        }
-                        else{
-                            CBankManager::dispolist.push_back(*dispo);
-                            break; //i++; //falls nicht vorhanden, i = letzte pos neue groesse
-                        }
-                    }
-                }
-        }
+        CCurrentAccount::loadvalues(pdata, loadvalues, line);
+        
     }while(line != endtag);
-    
-    
-    pdata.seekg(ret);
-    
-    return CCurrentAccount(CAccount::load(pdata, endtag), &CBankManager::dispolist.at(i));
+
+    return CCurrentAccount(loadvalues);
 }
+
+void CCurrentAccount::loadvalues(ifstream &pdata, vector<string> &loadvalues, string line){
+    
+        if(line.substr(0, 7)=="<Dispo>")
+            CMoney::load(pdata, loadvalues, 5, "</Dispo>");
+        else
+            CAccount::loadvalues(line, loadvalues, pdata);
+}
+
+CMoney* CCurrentAccount::checkdispoptr(vector <string>& loadvalues, int i){
+    CMoney *dispo = new CMoney(loadvalues, i);
+    if(!CBankManager::dispolistsize()){
+        CBankManager::dispolist.push_back(dispo);
+        return dispo;
+    }
+    else{
+        for(i=0; i<CBankManager::dispolistsize(); i++){  //repurpose i
+            if(*dispo == *(CBankManager::dispolist.at(i))){
+                    delete dispo;
+                    return CBankManager::dispolist.at(i); //falls Dispo betrag schon vorhanden, i=pos im Vektor
+                }
+            }
+            CBankManager::dispolist.push_back(dispo);
+            return dispo;
+            }
+        }

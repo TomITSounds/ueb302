@@ -24,7 +24,7 @@ class CBankManager{
 private:
     static vector <CCustomer*> cuslist;
     static vector <CBank*> banklist;
-    static vector <CMoney> dispolist;
+    static vector <CMoney*> dispolist;
     
 public:
     CBankManager(string);

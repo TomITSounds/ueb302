@@ -19,7 +19,17 @@ CAccount::CAccount(CBank *bank, string IBAN, CCustomer *Owner, CMoney Balance): 
 };
 
 CAccount::CAccount(const CAccount &copy): IBAN(copy.IBAN), Owner(copy.Owner), Balance(copy.Balance), bank(copy.bank){
-};
+}
+
+CAccount::CAccount(vector<string>& loadvalues):
+    IBAN(loadvalues.at(0)),
+    Owner(CBankManager::getcusptr(stol(loadvalues.at(1)))),
+    Balance(CMoney(loadvalues, 2)),
+    bank(CBankManager::getbankptr(loadvalues.at(4))){
+        Owner->addAccount(this);        //Account im Ownerobjekt hinzufuegen
+        bank->addAccount(this);
+}
+    
 
 CAccount::~CAccount(){
         cout << "CAccount:           Konto (" << flush;
@@ -59,12 +69,8 @@ void CAccount::print(){
     cout.flags(oldflag);
 }
 
-CAccount CAccount::load(ifstream &pdata, string endtag){
+CAccount CAccount::load(ifstream &pdata, vector <string>& loadvalues, string endtag){
     string line;
-    string iban;
-    CCustomer *owner = NULL;
-    CBank *bank =NULL;
-    int ret = pdata.tellg();
     
     do{
         if(pdata.eof()){
@@ -75,25 +81,28 @@ CAccount CAccount::load(ifstream &pdata, string endtag){
         getline(pdata>>ws, line);
         line.pop_back();
         
-        if(line.substr(0, 6) == "<IBAN>")
-            iban = basetypeload::loadstr(line, 7);
-        
-        /*if(line.substr(0, 9) == "<Balance>")
-            posmoney = pdata.tellg();*/
-        
-        if(line.substr(0, 6) == "<Bank>"){
-            basetypeload::loadstr(line, 7);
-            bank = CBankManager::getbankptr(line);
-        }
-        if(line.substr(0, 10) == "<Customer>"){
-            basetypeload::loadstr(line, 11);
-            owner = CBankManager::getcusptr(stol(line));
-               }
+        CAccount::loadvalues(line, loadvalues, pdata);
         
     }while(line != endtag);
     
-    pdata.seekg(ret);
     
-    return CAccount(bank,iban, owner,
-                    CMoney::load(pdata, "</Balance>"));
+    return CAccount(loadvalues);
+}
+
+void CAccount::loadvalues(string line, vector<string> &loadvalues, ifstream& pdata){
+    if(line.substr(0, 6) == "<IBAN>"){
+        basetypeload::loadstr(line, 7);
+        loadvalues.at(0) = line;
+    }
+    
+    if(line.substr(0, 6) == "<Bank>"){
+        basetypeload::loadstr(line, 7);
+        loadvalues.at(4) = line;
+    }
+    if(line.substr(0, 10) == "<Customer>"){
+        basetypeload::loadstr(line, 11);
+        loadvalues.at(1) = line;
+    }
+    if(line.substr(0, 9) == "<Balance>")
+        CMoney::loadvalues(pdata, loadvalues, 2);
 }

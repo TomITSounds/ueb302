@@ -26,6 +26,7 @@ private:
 public:    
     CCustomer(long CusNr, string Name, CAddress Address, CDate DOB);
     CCustomer(const CCustomer&);
+    CCustomer(vector<string>&);
     ~CCustomer();
     
     void set(long CusNr, string Name, CAddress Address, CDate DOB);
@@ -34,7 +35,9 @@ public:
     string getName(){return Name;};
     bool addAccount(CAccount *New);
     void replaceLastAccount(CAccount*);
-    static CCustomer load(ifstream&);
+    
+    static CCustomer load(ifstream&, vector <string>&);
+    static void loadvalues(ifstream&, vector <string>&);
 };
 
 

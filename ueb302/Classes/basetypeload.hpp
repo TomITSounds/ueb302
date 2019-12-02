@@ -17,14 +17,6 @@ using namespace std;
 
 class basetypeload{
 public:
-    static string loadstr(string&, int);
-    
-    static long loadlong(string&, int);
-    
-    static int loadint(string&, int);
-    
-    static double loaddouble(string&, int);
-    
-    
+    static void loadstr(string&, int);
 };
 #endif /* basetypeload_hpp */

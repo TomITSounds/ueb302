@@ -6,6 +6,7 @@
 #include <iomanip>
 #include <fstream>
 #include "basetypeload.hpp"
+#include <vector>
 
 using namespace std;
 
@@ -18,6 +19,11 @@ CSavingsAccount::CSavingsAccount(CAccount topclass, double interest): CAccount(t
 }
 
 CSavingsAccount::CSavingsAccount(const CSavingsAccount& copy): CAccount(copy.bank, copy.IBAN, copy.Owner, copy.Balance), interest(copy.interest){}
+
+CSavingsAccount::CSavingsAccount(vector <string>& loadvalues):
+    interest(stod(loadvalues.at(5))),
+    CAccount(loadvalues){
+}
 
 CSavingsAccount::~CSavingsAccount(){
     cout << "SavingsAccount:     Konto (" << flush;
@@ -34,27 +40,35 @@ void CSavingsAccount::print(){
     cout.flags(oldflag);
 }
 
-CSavingsAccount CSavingsAccount::load(ifstream &pdata, string endtag){
-    int ret = pdata.tellg();
+    
+
+CSavingsAccount CSavingsAccount::load(ifstream &pdata, vector <string>& loadvalues, string endtag){
     string line;
-    double intrate;
+    
+    do{
+        if(pdata.eof()){
+            cout << "Datei fehlerhaft CSavingsaccount"<<endl;
+            break;
+        }
+        getline(pdata>>ws, line);
+        line.pop_back();
         
-        do{
-            if(pdata.eof()){
-                cout << "Datei fehlerhaft SAvings"<<endl;
-                break;
-            }
+        
+    CSavingsAccount::loadvalues(pdata, loadvalues, line);
             
-            getline(pdata>>ws, line);
-            line.pop_back();
-            
-            if(line.substr(0, 14)=="<InterestRate>"){
-                intrate = basetypeload::loaddouble(line, 15);
-            }
-            
-        }while(line != endtag);
-                                     
-    pdata.seekg(ret);
-                                     
-        return CSavingsAccount(CAccount::load(pdata, "</SavingsAccount>"), intrate);
-    }
+    }while(line != endtag);
+
+    return CSavingsAccount(loadvalues);
+}
+
+void CSavingsAccount::loadvalues(ifstream &pdata, vector<string> &loadvalues, string line){
+    
+      
+        
+        if(line.substr(0, 14)=="<InterestRate>"){
+             basetypeload::loadstr(line, 15);
+             loadvalues.at(5) = line;
+        }
+        else
+            CAccount::loadvalues(line, loadvalues, pdata);
+}

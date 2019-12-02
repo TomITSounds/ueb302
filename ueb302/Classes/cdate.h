@@ -15,11 +15,13 @@ class CDate{
     public:
         CDate();
         CDate(int, int, int);
+        CDate(vector<string>&, int=0);
     
         void setDate(int, int, int);
         virtual void print();
     
-    static CDate load(ifstream&, string);
+    static CDate load(ifstream&, vector <string>&, int=0,string="</Birthday>");
+    static void loadvalues(ifstream&, vector <string>&, int=0, string="</Birthday>");
     
 };
 

@@ -12,9 +12,14 @@
 
 using namespace std;
 
-CBank::CBank(string name, string bic){
-    this->name = name;
-    this->bic = bic;
+CBank::CBank(string name, string bic):
+    name(name),
+    bic(bic){
+}
+
+CBank::CBank(vector<string>& loadvalues):
+    name(loadvalues.at(0)),
+    bic(loadvalues.at(1)){
 }
 
 CBank::~CBank(){
@@ -96,11 +101,15 @@ bool CBank::addAccount(CAccount *newacc){
 void CBank::replaceLastAccount(CAccount *newacc){
     Accounts.back() = newacc;
 }
-CBank CBank::load(ifstream &pdata){
-    string name;
-    string bic;
-    string line;
+CBank CBank::load(ifstream &pdata, vector <string>& loadvalues){
     
+    CBank::loadvalues(pdata, loadvalues);
+    
+    return CBank(loadvalues);
+}
+
+void CBank::loadvalues(ifstream &pdata, vector<string> &loadvalues){
+    string line;
     do{
         if(pdata.eof()){
             cout << "Datei fehlerhaft Bank"<<endl;
@@ -110,13 +119,14 @@ CBank CBank::load(ifstream &pdata){
         getline(pdata>>ws, line);
         line.pop_back();
         
-        if(line.substr(0, 6)=="<Name>")
-            name = basetypeload::loadstr(line, 7);
-            
-        if(line.substr(0, 5)=="<BIC>")
-            bic = basetypeload::loadstr(line, 6);
+        if(line.substr(0, 6)=="<Name>"){
+            basetypeload::loadstr(line, 7);
+            loadvalues.at(0) = line;
+        }
+        if(line.substr(0, 5)=="<BIC>"){
+            basetypeload::loadstr(line, 6);
+            loadvalues.at(1) = line;
+            }
     
     }while (line != "</Bank>");
-    
-    return CBank(name, bic);
 }

@@ -3,15 +3,20 @@
 #include <string>
 #include <iomanip>
 #include "basetypeload.hpp"
+#include <vector>
 
 using namespace std;
 
 CMoney::CMoney(): Amount(0.0), Currency("EUR"){};
 
-CMoney::CMoney(double Amount, string Currency){
-    this->Amount = Amount;
-    this->Currency = Currency;
+CMoney::CMoney(double Amount, string Currency):
+    Amount(Amount), Currency(Currency){
 }
+
+CMoney::CMoney(vector <string>& loadvalues, int i):
+    Amount(stod(loadvalues.at(0+i))),
+    Currency(loadvalues.at(1+i)){
+    }
 
 void CMoney::set(double Amount){
     this->Amount = Amount;
@@ -39,32 +44,37 @@ void CMoney::lprint(){
             << endl;
 }
 
-CMoney CMoney::load(ifstream &pdata, string endtag){
+CMoney CMoney::load(ifstream &pdata, vector <string>& loadvalues, int i, string endtag){
+    
+    CMoney::loadvalues(pdata, loadvalues, i, endtag);
+    
+    return CMoney(loadvalues, i);
+}
+
+void CMoney::loadvalues(ifstream &pdata, vector<string> &loadvalues, int i, string endtag){
     string line;
-    double amount;
-    string currency;
-    int ret = pdata.tellg();
 
     do{
         if(pdata.eof()){
             cout << "Datei fehlerhaft CMoney"<<endl;
-            break;
+            return;
         }
         getline(pdata>>ws, line);
         line.pop_back();
         
-        if(line.substr(0, 8)=="<Amount>")
-            amount = basetypeload::loaddouble(line, 9);
-        
-        if(line.substr(0, 10)=="<Currency>")
-            currency = basetypeload::loadstr(line, 11);
+        if(line.substr(0, 8)=="<Amount>"){
+            basetypeload::loadstr(line, 9);
+            loadvalues.at(0+i) = line;
+        }
+        if(line.substr(0, 10)=="<Currency>"){
+            basetypeload::loadstr(line, 11);
+            loadvalues.at(1+i) = line;
+        }
     
     } while(line != endtag);
-    
-    pdata.seekg(ret);
-    
-    return CMoney(amount, currency);
 }
+
+
 
  bool operator==(const CMoney &m1, const CMoney &m2)
 {

@@ -26,6 +26,7 @@ protected:
 public:
     CAccount(CBank *bank, string IBAN, CCustomer *Owner, CMoney Balance);
     CAccount(const CAccount&);
+    CAccount(vector<string>&);
     virtual ~CAccount();
     
     CCustomer *getOwner(){return Owner;};
@@ -36,7 +37,8 @@ public:
     CMoney getBalance(){return Balance;}
     CBank* getbank(){return bank;}
     
-    static CAccount load(ifstream&, string);
+    static CAccount load(ifstream&, vector <string>&, string="</Account>");
+    static void loadvalues(string, vector <string>&, ifstream&);
      
     /*friend class CCurrentAccount;
     friend class CSavingsAccount;

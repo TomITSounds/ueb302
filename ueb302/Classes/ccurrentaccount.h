@@ -15,13 +15,18 @@ public:
     CCurrentAccount(CBank *bank, string IBAN, CCustomer *Owner, CMoney Balance, CMoney *dispo);
     CCurrentAccount(CAccount, CMoney*);
     CCurrentAccount(const CCurrentAccount&);
+    CCurrentAccount(vector <string>& loadvalues);
     ~CCurrentAccount();
     
     void print();
     
-    static CCurrentAccount load(ifstream&, string);
+    static CCurrentAccount load(ifstream&, vector <string>&, string="</CurrentAccount>");
+    static void loadvalues(ifstream&, vector <string>&, string);
+    
+    static CMoney* checkdispoptr(vector <string>&, int=0);
     
     friend class CFixedDepositAccount;
+    
 };
 
 #endif /* ccurrentaccount_hpp */
