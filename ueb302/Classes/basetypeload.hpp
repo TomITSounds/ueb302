@@ -14,7 +14,7 @@
 #include <fstream>
 
 using namespace std;
-
+//Entfernt Tags von strings und speichert diesen in der uebergebenen Referenz, i gibt grosse des Endtag an ->Anfangstag = endtag -1
 class basetypeload{
 public:
     static void loadstr(string&, int);
