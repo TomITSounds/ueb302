@@ -42,7 +42,7 @@ void CSavingsAccount::print(){
 
     
 
-CSavingsAccount CSavingsAccount::load(ifstream &pdata, vector <string>& loadvalues, string endtag){
+CSavingsAccount* CSavingsAccount::load(ifstream &pdata, vector <string>& loadvalues, string endtag){
     string line;
     
     do{
@@ -58,7 +58,7 @@ CSavingsAccount CSavingsAccount::load(ifstream &pdata, vector <string>& loadvalu
             
     }while(line != endtag);
 
-    return CSavingsAccount(loadvalues);
+    return new CSavingsAccount(loadvalues);
 }
 
 void CSavingsAccount::loadvalues(ifstream &pdata, vector<string> &loadvalues, string line){

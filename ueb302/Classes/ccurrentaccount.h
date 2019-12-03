@@ -20,7 +20,7 @@ public:
     
     void print();
     
-    static CCurrentAccount load(ifstream&, vector <string>&, string="</CurrentAccount>");
+    static CCurrentAccount* load(ifstream&, vector <string>&, string="</CurrentAccount>");
     static void loadvalues(ifstream&, vector <string>&, string);
     
     static CMoney* checkdispoptr(vector <string>&, int=0);

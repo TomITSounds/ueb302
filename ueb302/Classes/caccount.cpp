@@ -69,7 +69,7 @@ void CAccount::print(){
     cout.flags(oldflag);
 }
 
-CAccount CAccount::load(ifstream &pdata, vector <string>& loadvalues, string endtag){
+CAccount* CAccount::load(ifstream &pdata, vector <string>& loadvalues, string endtag){
     string line;
     
     do{
@@ -85,8 +85,7 @@ CAccount CAccount::load(ifstream &pdata, vector <string>& loadvalues, string end
         
     }while(line != endtag);
     
-    
-    return CAccount(loadvalues);
+    return new CAccount(loadvalues);
 }
 
 void CAccount::loadvalues(string line, vector<string> &loadvalues, ifstream& pdata){

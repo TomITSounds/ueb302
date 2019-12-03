@@ -50,9 +50,9 @@ void CDate::print(){
     << setw(4) << Year << endl;
 }
 
-CDate CDate::load(ifstream &pdata, vector <string>& loadvalues, int i, string endtag){
+CDate* CDate::load(ifstream &pdata, vector <string>& loadvalues, int i, string endtag){
     CDate::loadvalues(pdata, loadvalues, i, endtag);
-    return CDate(loadvalues, i);
+    return new CDate(loadvalues, i);
 }
 
 void CDate::loadvalues(ifstream &pdata, vector<string> &loadvalues, int i, string endtag){

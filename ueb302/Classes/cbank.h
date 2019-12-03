@@ -33,7 +33,7 @@ public:
     void replaceLastAccount(CAccount*);
     string getbic(){return bic;};
     
-    static CBank load(ifstream&, vector <string>&);
+    static CBank* load(ifstream&, vector <string>&);
     static void loadvalues(ifstream&, vector <string>&);
     
 };

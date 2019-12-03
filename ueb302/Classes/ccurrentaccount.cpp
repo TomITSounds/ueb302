@@ -45,7 +45,7 @@ void CCurrentAccount::print(){
     cout.flags(oldflag);
 }
 
-CCurrentAccount CCurrentAccount::load(ifstream &pdata, vector <string>& loadvalues, string endtag){
+CCurrentAccount* CCurrentAccount::load(ifstream &pdata, vector <string>& loadvalues, string endtag){
     string line;
     
     do{
@@ -61,7 +61,7 @@ CCurrentAccount CCurrentAccount::load(ifstream &pdata, vector <string>& loadvalu
         
     }while(line != endtag);
 
-    return CCurrentAccount(loadvalues);
+    return new CCurrentAccount(loadvalues);
 }
 
 void CCurrentAccount::loadvalues(ifstream &pdata, vector<string> &loadvalues, string line){

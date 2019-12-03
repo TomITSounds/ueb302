@@ -18,11 +18,11 @@ using namespace std;
  der Klassenauf. Neben dem filestream uebergibt es ein loadvector der von allen Klassen
  zum Zwischenspeichern der Strings aus der XML (vector size = 8* da Klasse mit Maximal 8 Einzelwerten)
  Jede Klasse hat eine loadvalues Funktion die Einzelnen Element ihrer Member und Member ihrer Unterklassen
- in den loadvalues Vecktor speichert so wie ein load Funktion (welche loadvalues von sich selbst sowie von Memberklassen und Oberklassen aufruft) und anschliessen ein Objekt seiner eigenen Klasse per value zurueckgibt.
+ in den loadvalues Vecktor speichert so wie ein load Funktion (welche loadvalues von sich selbst sowie von Memberklassen und Oberklassen aufruft) und anschliessen einen Zeiger auf ein Objekt seiner eigenen Klasse fuer den es Speicher zugewiesen hat.
  Klassen die selber Member von mehreren andern KLassen sind (Cdate, Cmoney etc...) koenne optional einen Index bekommen der definiert ab welcher Position im loadvector sie ihre Strings speichern.
  Alle Klassen haben einen Konstruktor, der einen String vector bekommt und aus diesen die benoetigten
  Daten genriert/ umwandelt. (Klassen die Member sind haben wieder Index
- CB allokiert dann Speicher und populiert Customer und Banklist damit.
+
  */
 
 vector <CCustomer*> CBankManager::cuslist;
@@ -41,13 +41,6 @@ CBankManager::CBankManager(string file){
     }
     string line; //string zum Lesen von xml
     
-    CCustomer *newcus = NULL;
-    CBank *newbank = NULL;
-    CAccount *newacc = NULL;
-    CCurrentAccount *newcuracc = NULL;
-    CSavingsAccount *newsavacc = NULL;
-    CFixedDepositAccount *newfixacc = NULL;
-    
     vector <string> loadvalues(8, ""); //vector zum Zwischenspeichern der Strings von xml an vorgegeben Positionen
     
     do{
@@ -55,53 +48,26 @@ CBankManager::CBankManager(string file){
             cout << "Datei fehlerhaft BankManager" << endl;
             return;
         }
-        
         getline(pdata >>ws, line);
         line.pop_back(); //Da testfile has \r\n
         
-        if(line == "<Customer>"){
-            
-            newcus = new CCustomer(CCustomer::load(pdata, loadvalues));
-            cuslist.push_back(newcus);
-            newcus = NULL;
-        }
+        if(line == "<Customer>")
+           cuslist.push_back(CCustomer::load(pdata, loadvalues));
+                    
+        if(line == "<Bank>")
+            banklist.push_back(CBank::load(pdata, loadvalues));
+
+        if(line == "<Account>")
+            CAccount::load(pdata, loadvalues);
+
+        if(line == "<CurrentAccount>")
+            CCurrentAccount::load(pdata,  loadvalues);
         
-        if(line == "<Bank>"){
-            newbank = new CBank(CBank::load(pdata, loadvalues));
-            banklist.push_back(newbank);
-            newbank = NULL;
-        }
+        if(line == "<SavingsAccount>")
+            CSavingsAccount::load(pdata,  loadvalues);
         
-        if(line == "<Account>"){
-            newacc = new CAccount(CAccount::load(pdata, loadvalues));
-            //pushback
-            
-            newacc = NULL;
-        }
-        
-        if(line == "<CurrentAccount>"){
-            newcuracc = new CCurrentAccount(CCurrentAccount::load(pdata,  loadvalues));
-            newcuracc->getOwner()->replaceLastAccount(newcuracc);
-            // Ersetz Adresse in Owner Account Liste da diese auf Stack zeigt (return by value)
-            newcuracc->getbank()->replaceLastAccount(newcuracc); //Same in Bank
-            newcuracc = NULL;
-        }
-        
-        if(line == "<SavingsAccount>"){
-            newsavacc = new CSavingsAccount(CSavingsAccount::load(pdata,  loadvalues));
-            newsavacc->getOwner()->replaceLastAccount(newsavacc);
-            // Ersetz Adresse in Owner Account Liste da diese auf Stack zeigt (return by value)
-            newsavacc->getbank()->replaceLastAccount(newsavacc); //Same in Bank
-            newsavacc = NULL;
-        }
-        
-        if(line == "<FixedDepositAccount>"){
-            newfixacc = new CFixedDepositAccount(CFixedDepositAccount::load(pdata, loadvalues));
-            newfixacc->getOwner()->replaceLastAccount(newfixacc);
-            // Ersetz Adresse in Owner Account Liste da diese auf Stack zeigt (return by value)
-            newfixacc->getbank()->replaceLastAccount(newfixacc); //Same in Bank
-            newfixacc = NULL;
-        }
+        if(line == "<FixedDepositAccount>")
+            CFixedDepositAccount::load(pdata, loadvalues);
         
     }while(line != "</Data>");
 

@@ -29,7 +29,7 @@ public:
     virtual ~CFixedDepositAccount() ;
     
     void print() ;
-    static CFixedDepositAccount load(ifstream&, vector <string>&);
+    static CFixedDepositAccount* load(ifstream&, vector <string>&);
     static void loadvalues(ifstream&, vector <string>&, string);
 };
 

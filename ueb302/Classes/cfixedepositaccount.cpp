@@ -41,7 +41,7 @@ CFixedDepositAccount::~CFixedDepositAccount(){
 }
 
 
-CFixedDepositAccount CFixedDepositAccount::load(ifstream &pdata, vector <string> &loadvalues){
+CFixedDepositAccount* CFixedDepositAccount::load(ifstream &pdata, vector <string> &loadvalues){
 
     string line;
     
@@ -60,7 +60,7 @@ CFixedDepositAccount CFixedDepositAccount::load(ifstream &pdata, vector <string>
     }while (line != "</FixedDepositAccount>");
     
     
-    return CFixedDepositAccount(loadvalues);
+    return new CFixedDepositAccount(loadvalues);
 }
 
 void CFixedDepositAccount::loadvalues(ifstream &pdata, vector<string> &loadvalues, string line){

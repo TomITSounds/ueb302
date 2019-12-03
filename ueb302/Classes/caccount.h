@@ -37,7 +37,7 @@ public:
     CMoney getBalance(){return Balance;}
     CBank* getbank(){return bank;}
     
-    static CAccount load(ifstream&, vector <string>&, string="</Account>");
+    static CAccount* load(ifstream&, vector <string>&, string="</Account>");
     static void loadvalues(string, vector <string>&, ifstream&);
      
     /*friend class CCurrentAccount;

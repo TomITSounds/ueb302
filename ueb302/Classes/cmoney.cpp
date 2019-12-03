@@ -44,11 +44,11 @@ void CMoney::lprint(){
             << endl;
 }
 
-CMoney CMoney::load(ifstream &pdata, vector <string>& loadvalues, int i, string endtag){
+CMoney* CMoney::load(ifstream &pdata, vector <string>& loadvalues, int i, string endtag){
     
     CMoney::loadvalues(pdata, loadvalues, i, endtag);
     
-    return CMoney(loadvalues, i);
+    return new CMoney(loadvalues, i);
 }
 
 void CMoney::loadvalues(ifstream &pdata, vector<string> &loadvalues, int i, string endtag){

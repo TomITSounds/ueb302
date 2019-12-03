@@ -36,7 +36,7 @@ public:
     bool addAccount(CAccount *New);
     void replaceLastAccount(CAccount*);
     
-    static CCustomer load(ifstream&, vector <string>&);
+    static CCustomer* load(ifstream&, vector <string>&);
     static void loadvalues(ifstream&, vector <string>&);
 };
 

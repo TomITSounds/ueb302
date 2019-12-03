@@ -42,10 +42,10 @@ void CAddress::print(){
     cout << endl;
 }
 
-CAddress CAddress::load(ifstream &pdata, vector <string>& loadvalues, int i, string endtag){
+CAddress* CAddress::load(ifstream &pdata, vector <string>& loadvalues, int i, string endtag){
     CAddress::loadvalues(pdata, loadvalues);
     
-    return CAddress(loadvalues, i);
+    return new CAddress(loadvalues, i);
 }
 
     void CAddress::loadvalues(ifstream &pdata, vector<string> &loadvalues, int i, string endtag){

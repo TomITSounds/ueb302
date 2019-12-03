@@ -101,11 +101,11 @@ bool CBank::addAccount(CAccount *newacc){
 void CBank::replaceLastAccount(CAccount *newacc){
     Accounts.back() = newacc;
 }
-CBank CBank::load(ifstream &pdata, vector <string>& loadvalues){
+CBank* CBank::load(ifstream &pdata, vector <string>& loadvalues){
     
     CBank::loadvalues(pdata, loadvalues);
     
-    return CBank(loadvalues);
+    return new CBank(loadvalues);
 }
 
 void CBank::loadvalues(ifstream &pdata, vector<string> &loadvalues){

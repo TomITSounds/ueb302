@@ -72,11 +72,11 @@ void CCustomer::replaceLastAccount(CAccount *newacc){
     Accounts.back() = newacc;
 }
 
-CCustomer CCustomer::load(ifstream &pdata, vector <string>&loadvalues){
+CCustomer* CCustomer::load(ifstream &pdata, vector <string>&loadvalues){
     
     CCustomer::loadvalues(pdata, loadvalues);
     
-    return CCustomer(loadvalues);
+    return new CCustomer(loadvalues);
 }
 
 void CCustomer::loadvalues(ifstream &pdata, vector<string> &loadvalues){
