@@ -27,7 +27,7 @@ public:
     void printStreet();
     void printZipCity();
     
-    static CAddress* load(ifstream&, vector <string>&, int=0, string="</Address>");
+    static CAddress* load(ifstream&, vector <string>&, int=0, string="</Address>", bool=false);
     static void loadvalues(ifstream&, vector <string>&, int=0, string="</Address>");
 };
 #endif /* caddress_hpp */

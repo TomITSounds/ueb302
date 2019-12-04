@@ -30,10 +30,9 @@ public:
     void set(string, string);
     void print();
     bool addAccount(CAccount *);
-    void replaceLastAccount(CAccount*);
     string getbic(){return bic;};
     
-    static CBank* load(ifstream&, vector <string>&);
+    static CBank* load(ifstream&, vector <string>&, bool=true);
     static void loadvalues(ifstream&, vector <string>&);
     
 };

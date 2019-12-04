@@ -15,11 +15,13 @@ using namespace std;
 CBank::CBank(string name, string bic):
     name(name),
     bic(bic){
+    vector <CAccount*> Accounts;
 }
 
 CBank::CBank(vector<string>& loadvalues):
     name(loadvalues.at(0)),
     bic(loadvalues.at(1)){
+    
 }
 
 CBank::~CBank(){
@@ -37,7 +39,7 @@ void CBank::print(){
     //print Name, Bic, Anzahl
     cout    << name << endl
             << "BIC " << bic << endl
-            << "Anzahl Konten: " << count << endl;
+            << "Anzahl Konten: " << Accounts.size() << endl;
     
         //Liste falls Konten vorhanden
     if (Accounts.size()){
@@ -98,35 +100,35 @@ bool CBank::addAccount(CAccount *newacc){
     return false;
 }
 
-void CBank::replaceLastAccount(CAccount *newacc){
-    Accounts.back() = newacc;
-}
-CBank* CBank::load(ifstream &pdata, vector <string>& loadvalues){
-    
-    CBank::loadvalues(pdata, loadvalues);
-    
-    return new CBank(loadvalues);
-}
-
-void CBank::loadvalues(ifstream &pdata, vector<string> &loadvalues){
-    string line;
+CBank* CBank::load(ifstream &pdata, vector <string>& loadvalues, bool alloc){
     do{
         if(pdata.eof()){
             cout << "Datei fehlerhaft Bank"<<endl;
             break;
         }
+        getline(pdata>>ws, loadvalues.back());
+        loadvalues.back().pop_back();
+        CBank::loadvalues(pdata, loadvalues);
         
-        getline(pdata>>ws, line);
-        line.pop_back();
-        
-        if(line.substr(0, 6)=="<Name>"){
-            basetypeload::loadstr(line, 7);
-            loadvalues.at(0) = line;
-        }
-        if(line.substr(0, 5)=="<BIC>"){
-            basetypeload::loadstr(line, 6);
-            loadvalues.at(1) = line;
-            }
+    }while (loadvalues.back() != "</Bank>");
     
-    }while (line != "</Bank>");
+    if(alloc)
+        return new CBank(loadvalues);
+    else
+        return NULL;
+}
+
+void CBank::loadvalues(ifstream &pdata, vector<string> &loadvalues){
+
+        if(loadvalues.back().substr(0, 6)=="<Name>"){
+            basetypeload::loadstr(loadvalues.back(), 7);
+            loadvalues.at(0) = loadvalues.back();
+            return;
+        }
+        if(loadvalues.back().substr(0, 5)=="<BIC>"){
+            basetypeload::loadstr(loadvalues.back(), 6);
+            loadvalues.at(1) = loadvalues.back();
+        }
+    
+    
 }

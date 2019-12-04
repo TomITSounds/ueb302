@@ -20,8 +20,9 @@ CCustomer::CCustomer(const CCustomer &Old): CusNr(Old.CusNr), Name(Old.Name), DO
 CCustomer::CCustomer(vector<string>& loadvalues):
     CusNr(stol(loadvalues.at(0))),
     Name(loadvalues.at(1)),
-    DOB(CDate(loadvalues, 5)),
-    Address(CAddress(loadvalues, 2)){
+    Address(CAddress(loadvalues, 2)),
+    DOB(CDate(loadvalues, 5)){
+
 }
     
 
@@ -68,42 +69,41 @@ bool CCustomer::addAccount(CAccount *New){
     return false;
 }
 
-void CCustomer::replaceLastAccount(CAccount *newacc){
-    Accounts.back() = newacc;
-}
-
-CCustomer* CCustomer::load(ifstream &pdata, vector <string>&loadvalues){
-    
+CCustomer* CCustomer::load(ifstream &pdata, vector <string>&loadvalues, bool alloc){
+    do{
+    if(pdata.eof()){
+        cout << "Datei fehlerhaft Customer"<<endl;
+        break;
+    }
+    getline(pdata>>ws, loadvalues.back());
+    loadvalues.back().pop_back();
+        
     CCustomer::loadvalues(pdata, loadvalues);
     
-    return new CCustomer(loadvalues);
+    }while (loadvalues.back() != "</Customer>");
+    
+    if(alloc)
+        return new CCustomer(loadvalues);
+    else
+        return NULL;
 }
 
 void CCustomer::loadvalues(ifstream &pdata, vector<string> &loadvalues){
-    string line;
-    do{
-        if(pdata.eof()){
-            cout << "Datei fehlerhaft Customer"<<endl;
-            break;
+        if(loadvalues.back().substr(0, 4)=="<ID>"){
+           basetypeload::loadstr(loadvalues.back(), 5);
+            loadvalues.at(0) = loadvalues.back();
+            return;
         }
-        getline(pdata>>ws, line);
-        line.pop_back();
-        
-            
-        if(line.substr(0, 6)=="<Name>"){
-            basetypeload::loadstr(line, 7);
-            loadvalues.at(1) = line;
+        if(loadvalues.back().substr(0, 6)=="<Name>"){
+            basetypeload::loadstr(loadvalues.back(), 7);
+            loadvalues.at(1) = loadvalues.back();
+            return;
         }
-        if(line.substr(0, 4)=="<ID>"){
-           basetypeload::loadstr(line, 5);
-            loadvalues.at(0) = line;
-        }
-        if(line.substr(0, 10)=="<Birthday>"){
-            CDate::loadvalues(pdata, loadvalues, 5);
-        }
-        if(line.substr(0, 9)=="<Address>"){
+        if(loadvalues.back().substr(0, 9)=="<Address>"){
             CAddress::loadvalues(pdata, loadvalues, 2);
+            return;
         }
-        
-    }while (line != "</Customer>");
+        if(loadvalues.back().substr(0, 10)=="<Birthday>"){
+                CDate::loadvalues(pdata, loadvalues, 5);
+            }
 }

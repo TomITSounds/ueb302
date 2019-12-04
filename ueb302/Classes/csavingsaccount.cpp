@@ -14,8 +14,6 @@ CSavingsAccount::CSavingsAccount(CBank *bank, string IBAN, CCustomer *Owner, CMo
 : interest(interest), CAccount(bank, IBAN, Owner, Balance){};
 
 CSavingsAccount::CSavingsAccount(CAccount topclass, double interest): CAccount(topclass), interest(interest){
-    bank->replaceLastAccount(this);
-    Owner->replaceLastAccount(this);
 }
 
 CSavingsAccount::CSavingsAccount(const CSavingsAccount& copy): CAccount(copy.bank, copy.IBAN, copy.Owner, copy.Balance), interest(copy.interest){}
@@ -43,32 +41,29 @@ void CSavingsAccount::print(){
     
 
 CSavingsAccount* CSavingsAccount::load(ifstream &pdata, vector <string>& loadvalues, string endtag){
-    string line;
+    
     
     do{
         if(pdata.eof()){
             cout << "Datei fehlerhaft CSavingsaccount"<<endl;
             break;
         }
-        getline(pdata>>ws, line);
-        line.pop_back();
+        getline(pdata>>ws, loadvalues.back());
+        loadvalues.back().pop_back();
         
         
-    CSavingsAccount::loadvalues(pdata, loadvalues, line);
+    CSavingsAccount::loadvalues(pdata, loadvalues);
             
-    }while(line != endtag);
+    }while(loadvalues.back() != endtag);
 
     return new CSavingsAccount(loadvalues);
 }
 
-void CSavingsAccount::loadvalues(ifstream &pdata, vector<string> &loadvalues, string line){
-    
-      
-        
-        if(line.substr(0, 14)=="<InterestRate>"){
-             basetypeload::loadstr(line, 15);
-             loadvalues.at(5) = line;
+void CSavingsAccount::loadvalues(ifstream &pdata, vector<string> &loadvalues){
+        if(loadvalues.back().substr(0, 14)=="<InterestRate>"){
+             basetypeload::loadstr(loadvalues.back(), 15);
+             loadvalues.at(5) = loadvalues.back();
         }
         else
-            CAccount::loadvalues(line, loadvalues, pdata);
+            CAccount::loadvalues(loadvalues, pdata);
 }

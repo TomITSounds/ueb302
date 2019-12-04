@@ -21,6 +21,5 @@ void basetypeload::loadstr(string& line, int tagsize){
     return;
 }
 
-    
-    
+
 

@@ -44,34 +44,36 @@ void CMoney::lprint(){
             << endl;
 }
 
-CMoney* CMoney::load(ifstream &pdata, vector <string>& loadvalues, int i, string endtag){
-    
+CMoney* CMoney::load(ifstream &pdata, vector <string>& loadvalues, int i, string endtag, bool alloc){
+
     CMoney::loadvalues(pdata, loadvalues, i, endtag);
+        
+    if(alloc)
+        return new CMoney(loadvalues, i);
+    else
+        return NULL;
     
-    return new CMoney(loadvalues, i);
 }
 
 void CMoney::loadvalues(ifstream &pdata, vector<string> &loadvalues, int i, string endtag){
-    string line;
-
     do{
         if(pdata.eof()){
             cout << "Datei fehlerhaft CMoney"<<endl;
-            return;
+            break;
         }
-        getline(pdata>>ws, line);
-        line.pop_back();
         
-        if(line.substr(0, 8)=="<Amount>"){
-            basetypeload::loadstr(line, 9);
-            loadvalues.at(0+i) = line;
-        }
-        if(line.substr(0, 10)=="<Currency>"){
-            basetypeload::loadstr(line, 11);
-            loadvalues.at(1+i) = line;
-        }
+        getline(pdata>>ws, loadvalues.back());
+        loadvalues.back().pop_back();
     
-    } while(line != endtag);
+        if(loadvalues.back().substr(0, 8)=="<Amount>"){
+            basetypeload::loadstr(loadvalues.back(), 9);
+            loadvalues.at(0+i) = loadvalues.back();
+        }
+        if(loadvalues.back().substr(0, 10)=="<Currency>"){
+            basetypeload::loadstr(loadvalues.back(), 11);
+            loadvalues.at(1+i) = loadvalues.back();
+        }
+    } while(loadvalues.back() != endtag);
 }
 
 

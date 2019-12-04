@@ -30,7 +30,7 @@ public:
     
     void print() ;
     static CFixedDepositAccount* load(ifstream&, vector <string>&);
-    static void loadvalues(ifstream&, vector <string>&, string);
+    static void loadvalues(ifstream&, vector <string>&);
 };
 
 #endif /* cfixedeposit_hpp */

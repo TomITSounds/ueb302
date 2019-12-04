@@ -29,9 +29,9 @@ CDate::CDate(int Day, int Month, int Year):
 }
 
 CDate::CDate(vector <string>& loadvalues, int i):
-    Year(stoi(loadvalues.at(0+i))),
+    Day(stoi(loadvalues.at(0+i))),
     Month(stoi(loadvalues.at(1+i))),
-    Day(stoi(loadvalues.at(2+i))){
+    Year(stoi(loadvalues.at(2+i))){
 }
 
 void CDate::setDate(int Day, int Month, int Year){
@@ -50,35 +50,41 @@ void CDate::print(){
     << setw(4) << Year << endl;
 }
 
-CDate* CDate::load(ifstream &pdata, vector <string>& loadvalues, int i, string endtag){
+CDate* CDate::load(ifstream &pdata, vector <string>& loadvalues, int i, string endtag, bool alloc){
+    
     CDate::loadvalues(pdata, loadvalues, i, endtag);
-    return new CDate(loadvalues, i);
+        
+    if(alloc)
+       return new CDate(loadvalues, i);
+    else
+       return NULL;
 }
 
 void CDate::loadvalues(ifstream &pdata, vector<string> &loadvalues, int i, string endtag){
-    string line;
+do{
+    if(pdata.eof()){
+        cout<<"Datei fehlerhaft CDate"<<endl;
+        break;
+    }
     
-    do{
-        if(pdata.eof()){
-            cout<<"Datei fehlerhaft CDate"<<endl;
-            return;
-        }
-        
-        getline(pdata>>ws, line);
-        line.pop_back();
-        
-        if(line.substr(0, 6)=="<Year>"){
-            basetypeload::loadstr(line, 7);
-            loadvalues.at(0+i) = line;
-        }
-        if(line.substr(0, 7)=="<Month>"){
-            basetypeload::loadstr(line, 8);
-            loadvalues.at(1+i) = line;
-        }
-        if(line.substr(0, 5)=="<Day>"){
-            basetypeload::loadstr(line,6);
-            loadvalues.at(2+i) = line;
-        }
-            
-    }while(line != endtag);
+    getline(pdata>>ws, loadvalues.back());
+    loadvalues.back().pop_back();
+    
+    if(loadvalues.back().substr(0, 5)=="<Day>"){
+        basetypeload::loadstr(loadvalues.back(),6);
+        loadvalues.at(0+i) = loadvalues.back();
+        continue;
+    }
+    if(loadvalues.back().substr(0, 7)=="<Month>"){
+        basetypeload::loadstr(loadvalues.back(), 8);
+        loadvalues.at(1+i) = loadvalues.back();
+        continue;
+    }
+    if(loadvalues.back().substr(0, 6)=="<Year>"){
+        basetypeload::loadstr(loadvalues.back(), 7);
+        loadvalues.at(2+i) = loadvalues.back();
+    }
+    
+}while(loadvalues.back() != endtag);
+    
 }

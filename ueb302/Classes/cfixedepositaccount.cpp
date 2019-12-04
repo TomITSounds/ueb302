@@ -20,8 +20,6 @@ CFixedDepositAccount::CFixedDepositAccount(CCurrentAccount base, double rate)
 :   CAccount(base.bank, base.IBAN, base.Owner, base.Balance),
     CCurrentAccount(base),
     CSavingsAccount(base.bank, base.IBAN, base.Owner, base.Balance, rate){
-        bank->replaceLastAccount(this);
-        Owner->replaceLastAccount(this);
     }
 
 CFixedDepositAccount::CFixedDepositAccount(CAccount base, double rate, CMoney* dispo)
@@ -32,7 +30,8 @@ CFixedDepositAccount::CFixedDepositAccount(vector <string>& loadvalues):
     CAccount(loadvalues),
     CSavingsAccount(loadvalues),
     CCurrentAccount(loadvalues){
-}
+}       //Can I use CAacount to initialise children so not to convert strings 3 times
+        //using direktive oder delegation
 
 CFixedDepositAccount::~CFixedDepositAccount(){
     cout << "FixedDepositAccount:Konto (" << flush;
@@ -42,8 +41,7 @@ CFixedDepositAccount::~CFixedDepositAccount(){
 
 
 CFixedDepositAccount* CFixedDepositAccount::load(ifstream &pdata, vector <string> &loadvalues){
-
-    string line;
+    
     
     do{
         if(pdata.eof()){
@@ -51,29 +49,28 @@ CFixedDepositAccount* CFixedDepositAccount::load(ifstream &pdata, vector <string
             break;
         }
         
-        getline(pdata>>ws, line);
-        line.pop_back();
+        getline(pdata>>ws, loadvalues.back());
+        loadvalues.back().pop_back();
         
-        CFixedDepositAccount::loadvalues(pdata, loadvalues, line);
+        CFixedDepositAccount::loadvalues(pdata, loadvalues);
         
-    
-    }while (line != "</FixedDepositAccount>");
-    
+    }while (loadvalues.back() != "</FixedDepositAccount>");
     
     return new CFixedDepositAccount(loadvalues);
 }
 
-void CFixedDepositAccount::loadvalues(ifstream &pdata, vector<string> &loadvalues, string line){
-    if(line.substr(0, 7)=="<Dispo>"){
-        CMoney::load(pdata, loadvalues, 5, "</Dispo>");
+void CFixedDepositAccount::loadvalues(ifstream &pdata, vector<string> &loadvalues){
+    if(loadvalues.back().substr(0, 7)=="<Dispo>"){
+        CMoney::load(pdata, loadvalues, 6, "</Dispo>");
         return;
     }
-    if(line.substr(0, 14)=="<InterestRate>"){
-         basetypeload::loadstr(line, 15);
-         loadvalues.at(5) = line;
+    if(loadvalues.back().substr(0, 14)=="<InterestRate>"){
+        basetypeload::loadstr(loadvalues.back(), 15);
+        loadvalues.at(5) = loadvalues.back();
+        return;
     }
     else
-        CAccount::loadvalues(line, loadvalues, pdata);
+        CAccount::loadvalues(loadvalues, pdata);
 }
 
 void CFixedDepositAccount::print(){

@@ -22,7 +22,7 @@ public:
     void print();
     
     static CSavingsAccount* load(ifstream&, vector <string>&, string="</SavingsAccount>");
-    static void loadvalues(ifstream&, vector <string>&, string);
+    static void loadvalues(ifstream&, vector <string>&);
     
 };
 

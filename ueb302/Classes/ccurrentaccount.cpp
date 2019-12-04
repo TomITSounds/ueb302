@@ -16,14 +16,12 @@ CCurrentAccount::CCurrentAccount(CBank *bank, string IBAN, CCustomer *Owner, CMo
 
 CCurrentAccount::CCurrentAccount(CAccount topclass, CMoney *dispo): CAccount(topclass),
 dispo(dispo){
-    bank->replaceLastAccount(this);
-    Owner->replaceLastAccount(this);
 }
 
 CCurrentAccount::CCurrentAccount(const CCurrentAccount& copy): CAccount(copy.bank, copy.IBAN, copy.Owner, copy.Balance), dispo(copy.dispo){}
 
 CCurrentAccount::CCurrentAccount(vector <string>& loadvalues):
-    dispo(checkdispoptr(loadvalues, 5)),
+    dispo(checkdispoptr(loadvalues, 6)),
     CAccount(loadvalues){
 }
     
@@ -46,7 +44,7 @@ void CCurrentAccount::print(){
 }
 
 CCurrentAccount* CCurrentAccount::load(ifstream &pdata, vector <string>& loadvalues, string endtag){
-    string line;
+    
     
     do{
         if(pdata.eof()){
@@ -54,24 +52,26 @@ CCurrentAccount* CCurrentAccount::load(ifstream &pdata, vector <string>& loadval
             break;
         }
         
-        getline(pdata>>ws, line);
-        line.pop_back();
+        getline(pdata>>ws, loadvalues.back());
+        loadvalues.back().pop_back();
         
-        CCurrentAccount::loadvalues(pdata, loadvalues, line);
+        CCurrentAccount::loadvalues(pdata, loadvalues);
         
-    }while(line != endtag);
+    }while(loadvalues.back() != endtag);
 
     return new CCurrentAccount(loadvalues);
 }
 
-void CCurrentAccount::loadvalues(ifstream &pdata, vector<string> &loadvalues, string line){
+void CCurrentAccount::loadvalues(ifstream &pdata, vector<string> &loadvalues){
     
-        if(line.substr(0, 7)=="<Dispo>")
-            CMoney::load(pdata, loadvalues, 5, "</Dispo>");
+        if(loadvalues.back().substr(0, 7)=="<Dispo>")
+            CMoney::loadvalues(pdata, loadvalues, 6, "</Dispo>"); //loadvalues[5] wird ausgelassen da dort fuer FixedDeposit(vons Savings geerbt) Interest gepeichert wird
         else
-            CAccount::loadvalues(line, loadvalues, pdata);
+            CAccount::loadvalues(loadvalues, pdata);
 }
 
+
+//Ueberprueft ob gleicher Dispo schon existiert. falls nicht wird er angelegt.
 CMoney* CCurrentAccount::checkdispoptr(vector <string>& loadvalues, int i){
     CMoney *dispo = new CMoney(loadvalues, i);
     if(!CBankManager::dispolistsize()){
