@@ -30,9 +30,8 @@ vector <CCustomer*> CBankManager::cuslist;
 vector <CBank*> CBankManager::banklist;
 vector <CMoney*> CBankManager::dispolist; //Statische Liste von Dispo betraegen, da jeder Dispo nur einmal existiert, aber mehrere Account darauf zeigen koennen. (Smart Ptr??)
 
-
 CBankManager::CBankManager(string file){
-    ifstream pdata("/Volumes/Data/Beuth/3. Semester/Info 3/Ueb/ueb302/ueb302/Classes/"+file);
+    ifstream pdata("/Volumes/Data/Beuth/3.Semester/Info 3/Ueb/ueb302/ueb302/"+file);
     
     if(pdata.is_open())
         cout << "Datei geoeffnet" << endl;
@@ -41,8 +40,7 @@ CBankManager::CBankManager(string file){
         return;
     }
     
-    vector <string> loadvalues(9, ""); //vector zum Zwischenspeichern der Strings von xml an vorgegeben Positionen
-    
+vector <string> loadvalues(9, ""); //vector zum Zwischenspeichern der Strings von xml an vorgegeben Positionen
     do{
         if(pdata.eof()){
             cout << "Datei fehlerhaft BankManager" << endl;
@@ -61,10 +59,10 @@ CBankManager::CBankManager(string file){
             CAccount::load(pdata, loadvalues);
 
         if(loadvalues.back() == "<CurrentAccount>")
-            CCurrentAccount::load(pdata,  loadvalues);
+            CCurrentAccount::load(pdata, loadvalues);
         
         if(loadvalues.back() == "<SavingsAccount>")
-            CSavingsAccount::load(pdata,  loadvalues);
+            CSavingsAccount::load(pdata, loadvalues);
         
         if(loadvalues.back() == "<FixedDepositAccount>")
             CFixedDepositAccount::load(pdata, loadvalues);
@@ -72,7 +70,6 @@ CBankManager::CBankManager(string file){
     }while(loadvalues.back() != "</Data>");
 
     cout<<"Datei wurde eingelesen!"<<endl;
-    
 }
 
 CBankManager::~CBankManager(){
@@ -86,40 +83,31 @@ CBankManager::~CBankManager(){
     banklist.clear();
 }
 
-
 CBank* CBankManager::getbankptr(string biccmp){
-    
     for(int i=0; i<banklist.size(); i++){
         if(banklist.at(i)->getbic() == biccmp)
             return banklist.at(i);
     }
-    
     return NULL;
 }
 
 CCustomer* CBankManager::getcusptr(long cusnrcmp){
- 
     for(int i=0; i<cuslist.size(); i++){
      if(cuslist.at(i)->getCusNr() == cusnrcmp)
          return cuslist.at(i);
     }
- 
- return NULL;
     return NULL;
 }
 
 void CBankManager::printCustomerList(){
-    
     for(int i=0; i<cuslist.size(); i++){
         cuslist.at(i)->print();
-        
         cout << endl<<endl;
     }
     cout<< endl;
 }
 
 void CBankManager::printBankList(){
-    
     for(int i=0; i<banklist.size(); i++){
         banklist.at(i)->print();
         cout << endl;

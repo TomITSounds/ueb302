@@ -19,6 +19,5 @@ class CTime{
     
         void setTime(int, int, int = 0);
         virtual void print();
-    
 };
 #endif /* ctime_hpp */

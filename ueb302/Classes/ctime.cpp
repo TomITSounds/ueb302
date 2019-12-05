@@ -22,7 +22,6 @@ CTime::CTime(int Hour, int Minute, int Second){
     this->Second = Second;
 }
 
-
 void CTime::setTime(int Hour, int Minute, int Second){
      this->Hour = Hour;
      this->Minute = Minute;

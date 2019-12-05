@@ -20,8 +20,8 @@ class CDate{
         void setDate(int, int, int);
         virtual void print();
     
-    static CDate* load(ifstream&, vector <string>&, int=0,string="</Birthday>", bool=false);
-    static void loadvalues(ifstream&, vector <string>&, int=0, string="</Birthday>");
+        static CDate* load(ifstream&, vector <string>&, int=0,string="</Birthday>", bool=false);
+        static void loadvalues(ifstream&, vector <string>&, int=0, string="</Birthday>");
     
 };
 

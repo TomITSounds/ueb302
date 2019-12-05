@@ -1,5 +1,3 @@
-
-
 #include "cbank.h"
 #include <iostream>
 #include <string>
@@ -21,7 +19,6 @@ CBank::CBank(string name, string bic):
 CBank::CBank(vector<string>& loadvalues):
     name(loadvalues.at(0)),
     bic(loadvalues.at(1)){
-    
 }
 
 CBank::~CBank(){
@@ -41,7 +38,7 @@ void CBank::print(){
             << "BIC " << bic << endl
             << "Anzahl Konten: " << Accounts.size() << endl;
     
-        //Liste falls Konten vorhanden
+    //Liste falls Konten vorhanden
     if (Accounts.size()){
         // flag linksbuendig
         int oldflag;
@@ -59,7 +56,6 @@ void CBank::print(){
         for(int i=0; i< (28+23+16+16); i++)
             cout << "-";
         cout << endl;
-    
         
         for(int i=0; i<Accounts.size(); i++){
             cout.flags(lflag); //flag linksbuendig
@@ -76,11 +72,8 @@ void CBank::print(){
             cout.flags(lflag);
             cout  <<  " " << setw(3) << Accounts.at(i)->getBalance().getCurrency()
             << endl;
-            
         }
-        
         cout.flags(oldflag);
-    
     }
 }
 

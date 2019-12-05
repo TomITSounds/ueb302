@@ -9,7 +9,6 @@
 
 using namespace std;
 
-
 CDate::CDate(){
     time_t Now;
     time(&Now);
@@ -20,8 +19,6 @@ CDate::CDate(){
     
 }
 
-
-    
 CDate::CDate(int Day, int Month, int Year):
     Year(Year),
     Month(Month),
@@ -51,9 +48,8 @@ void CDate::print(){
 }
 
 CDate* CDate::load(ifstream &pdata, vector <string>& loadvalues, int i, string endtag, bool alloc){
-    
     CDate::loadvalues(pdata, loadvalues, i, endtag);
-        
+
     if(alloc)
        return new CDate(loadvalues, i);
     else
