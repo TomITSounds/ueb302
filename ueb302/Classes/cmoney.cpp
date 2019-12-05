@@ -44,15 +44,9 @@ void CMoney::lprint(){
             << endl;
 }
 
-CMoney* CMoney::load(ifstream &pdata, vector <string>& loadvalues, int i, string endtag, bool alloc){
-
+CMoney* CMoney::load(ifstream &pdata, vector <string>& loadvalues, int i, string endtag){
     CMoney::loadvalues(pdata, loadvalues, i, endtag);
-        
-    if(alloc)
-        return new CMoney(loadvalues, i);
-    else
-        return NULL;
-    
+    return new CMoney(loadvalues, i);
 }
 
 void CMoney::loadvalues(ifstream &pdata, vector<string> &loadvalues, int i, string endtag){
@@ -64,19 +58,22 @@ void CMoney::loadvalues(ifstream &pdata, vector<string> &loadvalues, int i, stri
         
         getline(pdata>>ws, loadvalues.back());
         loadvalues.back().pop_back();
-    
-        if(loadvalues.back().substr(0, 8)=="<Amount>"){
-            basetypeload::loadstr(loadvalues.back(), 9);
-            loadvalues.at(0+i) = loadvalues.back();
-        }
-        if(loadvalues.back().substr(0, 10)=="<Currency>"){
-            basetypeload::loadstr(loadvalues.back(), 11);
-            loadvalues.at(1+i) = loadvalues.back();
-        }
+        loadsinglevalue(loadvalues, i);
+
     } while(loadvalues.back() != endtag);
 }
 
-
+void CMoney::loadsinglevalue(vector <string>& loadvalues, int i){
+    if(loadvalues.back().substr(0, 8)=="<Amount>"){
+        basetypeload::loadstr(loadvalues.back(), 9);
+        loadvalues.at(0+i) = loadvalues.back();
+        return;
+    }
+    if(loadvalues.back().substr(0, 10)=="<Currency>"){
+        basetypeload::loadstr(loadvalues.back(), 11);
+        loadvalues.at(1+i) = loadvalues.back();
+    }
+}
 
  bool operator==(const CMoney &m1, const CMoney &m2)
 {

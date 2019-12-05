@@ -42,17 +42,9 @@ void CAddress::print(){
     cout << endl;
 }
 
-CAddress* CAddress::load(ifstream &pdata, vector <string>& loadvalues, int i, string endtag, bool alloc){
-
-        
+CAddress* CAddress::load(ifstream &pdata, vector <string>& loadvalues, int i, string endtag){
     CAddress::loadvalues(pdata, loadvalues);
-        
-
-    
-if(alloc)
     return new CAddress(loadvalues, i);
-else
-    return NULL;
 }
 
 void CAddress::loadvalues(ifstream &pdata, vector<string> &loadvalues, int i, string endtag){
@@ -64,18 +56,22 @@ void CAddress::loadvalues(ifstream &pdata, vector<string> &loadvalues, int i, st
         
         getline(pdata>>ws, loadvalues.back());
         loadvalues.back().pop_back();
-         
-        if(loadvalues.back().substr(0, 8)=="<Street>"){
-            basetypeload::loadstr(loadvalues.back(), 9);
-            loadvalues.at(0+i) = loadvalues.back();
-        }
-        if(loadvalues.back().substr(0, 10)=="<Postcode>"){
-            basetypeload::loadstr(loadvalues.back(), 11);
-            loadvalues.at(1+i) = loadvalues.back();
-        }
-        if(loadvalues.back().substr(0, 6)=="<Town>"){
-            basetypeload::loadstr(loadvalues.back(), 7);
-            loadvalues.at(2+i) = loadvalues.back();
-        }
+        loadsinglevalue(loadvalues, i);
+
    }while(loadvalues.back() != endtag);
+}
+
+void CAddress::loadsinglevalue(vector <string>& loadvalues, int i){
+    if(loadvalues.back().substr(0, 8)=="<Street>"){
+        basetypeload::loadstr(loadvalues.back(), 9);
+        loadvalues.at(0+i) = loadvalues.back();
+    }
+    if(loadvalues.back().substr(0, 10)=="<Postcode>"){
+        basetypeload::loadstr(loadvalues.back(), 11);
+        loadvalues.at(1+i) = loadvalues.back();
+    }
+    if(loadvalues.back().substr(0, 6)=="<Town>"){
+        basetypeload::loadstr(loadvalues.back(), 7);
+        loadvalues.at(2+i) = loadvalues.back();
+    }
 }

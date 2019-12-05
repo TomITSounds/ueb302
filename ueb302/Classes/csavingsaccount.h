@@ -22,7 +22,8 @@ public:
     void print();
     
     static CSavingsAccount* load(ifstream&, vector <string>&, string="</SavingsAccount>");
-    static void loadvalues(ifstream&, vector <string>&);
+    static void loadvalues(ifstream&, vector <string>&, string="</SavingsAccount>");
+    static void loadsinglevalue(ifstream&, vector <string>&);
     
 };
 

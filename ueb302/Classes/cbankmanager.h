@@ -35,10 +35,11 @@ public:
     
     static CBank *getbankptr(string);
     static CCustomer *getcusptr(long);
+    static CMoney* getdispoptr(vector<string>&, int=0);
     
     static int dispolistsize(){return CBankManager::dispolist.size();}
     
-    friend CCurrentAccount;
+    //friend CCurrentAccount;
     
 };
 

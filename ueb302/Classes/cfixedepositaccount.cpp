@@ -30,8 +30,7 @@ CFixedDepositAccount::CFixedDepositAccount(vector <string>& loadvalues):
     CAccount(loadvalues),
     CSavingsAccount(loadvalues),
     CCurrentAccount(loadvalues){
-}       //Can I use CAacount to initialise children so not to convert strings 3 times
-        //using direktive oder delegation
+} 
 
 CFixedDepositAccount::~CFixedDepositAccount(){
     cout << "FixedDepositAccount:Konto (" << flush;
@@ -41,8 +40,11 @@ CFixedDepositAccount::~CFixedDepositAccount(){
 
 
 CFixedDepositAccount* CFixedDepositAccount::load(ifstream &pdata, vector <string> &loadvalues){
-    
-    
+    CFixedDepositAccount::loadvalues(pdata, loadvalues);
+    return new CFixedDepositAccount(loadvalues);
+}
+
+void CFixedDepositAccount::loadvalues(ifstream &pdata, vector<string> &loadvalues){
     do{
         if(pdata.eof()){
             cout << "Datei fehlerhaft FixDepo"<<endl;
@@ -52,14 +54,12 @@ CFixedDepositAccount* CFixedDepositAccount::load(ifstream &pdata, vector <string
         getline(pdata>>ws, loadvalues.back());
         loadvalues.back().pop_back();
         
-        CFixedDepositAccount::loadvalues(pdata, loadvalues);
+        CFixedDepositAccount::loadsinglevalue(pdata, loadvalues);
         
     }while (loadvalues.back() != "</FixedDepositAccount>");
-    
-    return new CFixedDepositAccount(loadvalues);
 }
 
-void CFixedDepositAccount::loadvalues(ifstream &pdata, vector<string> &loadvalues){
+void CFixedDepositAccount::loadsinglevalue(ifstream &pdata, vector <string> &loadvalues){
     if(loadvalues.back().substr(0, 7)=="<Dispo>"){
         CMoney::load(pdata, loadvalues, 6, "</Dispo>");
         return;
@@ -70,7 +70,7 @@ void CFixedDepositAccount::loadvalues(ifstream &pdata, vector<string> &loadvalue
         return;
     }
     else
-        CAccount::loadvalues(loadvalues, pdata);
+        CAccount::loadsinglevalue(pdata, loadvalues);
 }
 
 void CFixedDepositAccount::print(){

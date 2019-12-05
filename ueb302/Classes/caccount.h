@@ -38,7 +38,8 @@ public:
     CBank* getbank(){return bank;}
     
     static CAccount* load(ifstream&, vector <string>&, string="</Account>");
-    static void loadvalues(vector <string>&, ifstream&);
+    static void loadvalues( ifstream&, vector <string>&, string="</Account>");
+    static void loadsinglevalue(ifstream&, vector <string>&);
      
     /*friend class CCurrentAccount;
     friend class CSavingsAccount;

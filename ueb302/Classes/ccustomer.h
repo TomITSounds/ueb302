@@ -35,8 +35,9 @@ public:
     string getName(){return Name;};
     bool addAccount(CAccount *New);
     
-    static CCustomer* load(ifstream&, vector <string>&, bool=true);
+    static CCustomer* load(ifstream&, vector <string>&);
     static void loadvalues(ifstream&, vector <string>&);
+    static void loadsinglevalue(ifstream&, vector <string>&);
 };
 
 

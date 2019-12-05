@@ -21,7 +21,7 @@ dispo(dispo){
 CCurrentAccount::CCurrentAccount(const CCurrentAccount& copy): CAccount(copy.bank, copy.IBAN, copy.Owner, copy.Balance), dispo(copy.dispo){}
 
 CCurrentAccount::CCurrentAccount(vector <string>& loadvalues):
-    dispo(checkdispoptr(loadvalues, 6)),
+    dispo(CBankManager::getdispoptr(loadvalues, 6)),
     CAccount(loadvalues){
 }
     
@@ -44,48 +44,27 @@ void CCurrentAccount::print(){
 }
 
 CCurrentAccount* CCurrentAccount::load(ifstream &pdata, vector <string>& loadvalues, string endtag){
-    
-    
+    CCurrentAccount::loadvalues(pdata, loadvalues, endtag);
+    return new CCurrentAccount(loadvalues);
+}
+
+void CCurrentAccount::loadvalues(ifstream &pdata, vector <string> &loadvalues, string endtag){
     do{
         if(pdata.eof()){
             cout << "Datei fehlerhaft Currentaccount"<<endl;
             break;
         }
-        
         getline(pdata>>ws, loadvalues.back());
         loadvalues.back().pop_back();
-        
-        CCurrentAccount::loadvalues(pdata, loadvalues);
+        CCurrentAccount::loadsinglevalue(pdata, loadvalues);
         
     }while(loadvalues.back() != endtag);
-
-    return new CCurrentAccount(loadvalues);
 }
 
-void CCurrentAccount::loadvalues(ifstream &pdata, vector<string> &loadvalues){
-    
-        if(loadvalues.back().substr(0, 7)=="<Dispo>")
-            CMoney::loadvalues(pdata, loadvalues, 6, "</Dispo>"); //loadvalues[5] wird ausgelassen da dort fuer FixedDeposit(vons Savings geerbt) Interest gepeichert wird
-        else
-            CAccount::loadvalues(loadvalues, pdata);
+void CCurrentAccount::loadsinglevalue(ifstream &pdata, vector <string> &loadvalues){
+    if(loadvalues.back().substr(0, 7)=="<Dispo>")
+        CMoney::loadvalues(pdata, loadvalues, 6, "</Dispo>"); //loadvalues[5] wird ausgelassen da dort fuer FixedDeposit(vons Savings geerbt) Interest gepeichert wird
+    else
+        CAccount::loadsinglevalue(pdata,loadvalues);
 }
 
-
-//Ueberprueft ob gleicher Dispo schon existiert. falls nicht wird er angelegt.
-CMoney* CCurrentAccount::checkdispoptr(vector <string>& loadvalues, int i){
-    CMoney *dispo = new CMoney(loadvalues, i);
-    if(!CBankManager::dispolistsize()){
-        CBankManager::dispolist.push_back(dispo);
-        return dispo;
-    }
-    else{
-        for(i=0; i<CBankManager::dispolistsize(); i++){  //repurpose i
-            if(*dispo == *(CBankManager::dispolist.at(i))){
-                    delete dispo;
-                    return CBankManager::dispolist.at(i); //falls Dispo betrag schon vorhanden, i=pos im Vektor
-                }
-            }
-            CBankManager::dispolist.push_back(dispo);
-            return dispo;
-            }
-        }

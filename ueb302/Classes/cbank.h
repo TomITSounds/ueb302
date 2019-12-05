@@ -32,8 +32,9 @@ public:
     bool addAccount(CAccount *);
     string getbic(){return bic;};
     
-    static CBank* load(ifstream&, vector <string>&, bool=true);
+    static CBank* load(ifstream&, vector <string>&);
     static void loadvalues(ifstream&, vector <string>&);
+    static void loadsinglevalue(vector <string>&);
     
 };
 

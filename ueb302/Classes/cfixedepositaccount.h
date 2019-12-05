@@ -1,11 +1,3 @@
-//
-//  cfixedeposit.hpp
-//  ueb302
-//
-//  Created by Tom Mertens on 17.11.19.
-//  Copyright © 2019 Tom Mertens. All rights reserved.
-//
-
 #ifndef cfixedeposit_h
 #define cfixedeposit_h
 
@@ -14,11 +6,6 @@
 #include "csavingsaccount.h"
 #include "ccurrentaccount.h"
 #include <fstream>
-
-
-class CSavingsAccount;
-class CCurrentAccount;
-
 
 class CFixedDepositAccount:  virtual public CCurrentAccount, virtual public CSavingsAccount{
     
@@ -31,6 +18,7 @@ public:
     void print() ;
     static CFixedDepositAccount* load(ifstream&, vector <string>&);
     static void loadvalues(ifstream&, vector <string>&);
+    static void loadsinglevalue(ifstream&, vector <string>&);
 };
 
 #endif /* cfixedeposit_hpp */

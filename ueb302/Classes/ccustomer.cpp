@@ -69,26 +69,28 @@ bool CCustomer::addAccount(CAccount *New){
     return false;
 }
 
-CCustomer* CCustomer::load(ifstream &pdata, vector <string>&loadvalues, bool alloc){
-    do{
-    if(pdata.eof()){
-        cout << "Datei fehlerhaft Customer"<<endl;
-        break;
-    }
-    getline(pdata>>ws, loadvalues.back());
-    loadvalues.back().pop_back();
-        
+CCustomer* CCustomer::load(ifstream &pdata, vector <string>&loadvalues){
+    
     CCustomer::loadvalues(pdata, loadvalues);
     
-    }while (loadvalues.back() != "</Customer>");
-    
-    if(alloc)
-        return new CCustomer(loadvalues);
-    else
-        return NULL;
+    return new CCustomer(loadvalues);
+   
 }
 
 void CCustomer::loadvalues(ifstream &pdata, vector<string> &loadvalues){
+    do{
+        if(pdata.eof()){
+            cout << "Datei fehlerhaft Customer"<<endl;
+            break;
+        }
+        getline(pdata>>ws, loadvalues.back());
+        loadvalues.back().pop_back();
+        loadsinglevalue(pdata, loadvalues);
+        
+    }while (loadvalues.back() != "</Customer>");
+}
+
+void CCustomer::loadsinglevalue(ifstream &pdata, vector<string> &loadvalues){
         if(loadvalues.back().substr(0, 4)=="<ID>"){
            basetypeload::loadstr(loadvalues.back(), 5);
             loadvalues.at(0) = loadvalues.back();
@@ -105,5 +107,5 @@ void CCustomer::loadvalues(ifstream &pdata, vector<string> &loadvalues){
         }
         if(loadvalues.back().substr(0, 10)=="<Birthday>"){
                 CDate::loadvalues(pdata, loadvalues, 5);
-            }
+        }
 }

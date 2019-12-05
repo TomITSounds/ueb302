@@ -28,8 +28,9 @@ public:
     void print();
     void lprint();
     
-    static CMoney* load(ifstream&, vector <string>&, int=0, string="</Balance>", bool=false);
+    static CMoney* load(ifstream&, vector <string>&, int=0, string="</Balance>");
     static void loadvalues(ifstream&, vector <string>&, int=0, string="</Balance>");
+    static void loadsinglevalue(vector <string>&, int=0);
     
         friend bool operator== (const CMoney &m1, const CMoney &m2);
         friend bool operator!= (const CMoney &m1, const CMoney &m2);

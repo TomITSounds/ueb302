@@ -38,32 +38,32 @@ void CSavingsAccount::print(){
     cout.flags(oldflag);
 }
 
-    
-
 CSavingsAccount* CSavingsAccount::load(ifstream &pdata, vector <string>& loadvalues, string endtag){
-    
-    
-    do{
-        if(pdata.eof()){
-            cout << "Datei fehlerhaft CSavingsaccount"<<endl;
-            break;
-        }
-        getline(pdata>>ws, loadvalues.back());
-        loadvalues.back().pop_back();
-        
-        
-    CSavingsAccount::loadvalues(pdata, loadvalues);
-            
-    }while(loadvalues.back() != endtag);
+
+    CSavingsAccount::loadvalues(pdata, loadvalues, endtag);
 
     return new CSavingsAccount(loadvalues);
 }
 
-void CSavingsAccount::loadvalues(ifstream &pdata, vector<string> &loadvalues){
-        if(loadvalues.back().substr(0, 14)=="<InterestRate>"){
-             basetypeload::loadstr(loadvalues.back(), 15);
-             loadvalues.at(5) = loadvalues.back();
-        }
-        else
-            CAccount::loadvalues(loadvalues, pdata);
+void CSavingsAccount::loadvalues(ifstream &pdata, vector<string> &loadvalues, string endtag){
+        do{
+            if(pdata.eof()){
+                cout << "Datei fehlerhaft CSavingsaccount"<<endl;
+                break;
+            }
+            getline(pdata>>ws, loadvalues.back());
+            loadvalues.back().pop_back();
+            
+        CSavingsAccount::loadsinglevalue(pdata, loadvalues);
+                
+        }while(loadvalues.back() != endtag);
+}
+
+void CSavingsAccount::loadsinglevalue(ifstream &pdata, vector<string> &loadvalues){
+    if(loadvalues.back().substr(0, 14)=="<InterestRate>"){
+         basetypeload::loadstr(loadvalues.back(), 15);
+         loadvalues.at(5) = loadvalues.back();
+    }
+    else
+        CAccount::loadsinglevalue(pdata, loadvalues);
 }

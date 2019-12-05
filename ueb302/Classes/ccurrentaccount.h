@@ -21,7 +21,8 @@ public:
     void print();
     
     static CCurrentAccount* load(ifstream&, vector <string>&, string="</CurrentAccount>");
-    static void loadvalues(ifstream&, vector <string>&);
+    static void loadvalues(ifstream&, vector <string>&, string="</CurrentAccount>");
+    static void loadsinglevalue(ifstream&, vector <string>&);
     
     static CMoney* checkdispoptr(vector <string>&, int=0);
     

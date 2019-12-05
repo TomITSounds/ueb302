@@ -19,7 +19,7 @@ using namespace std;
  zum Zwischenspeichern der Strings aus der XML (vector size = 8* da Klasse mit Maximal 8 Einzelwerten)
  Jede Klasse hat eine loadvalues Funktion die Einzelnen Element ihrer Member und Member ihrer Unterklassen
  in den loadvalues Vecktor speichert so wie ein load Funktion (welche loadvalues von sich selbst sowie von Memberklassen und Oberklassen aufruft) und anschliessen einen Zeiger auf ein Objekt seiner eigenen Klasse fuer den es Speicher zugewiesen hat.
- Einige Klassen haben in der load funktion einen optionalen bool wert der entscheidet ob speicher zugewiesen wird. Bei Memberklassen (CAdress, Cdate, CMoney) ist dieser per default auf false, Bei CAccount, Cbank etc auf true.
+
  Die vererbten Klassen Accounts besitzen diesen nicht, da deren loadvalues Funktionen keinen Loop beinhalten sondern Pro Member elemnt aufgerufen werden, da die Daten der Datenbank nicht nach Oberklassedate->UNterklasse Daten sortiert ist. Daher wird bei load Aufruf immer Speicher allokiert
  Klassen die selber Member von mehreren andern KLassen sind (Cdate, Cmoney etc...) koenne optional einen Index bekommen der definiert ab welcher Position im loadvector sie ihre Strings speichern.
  Alle Klassen haben einen Konstruktor, der einen String vector bekommt und aus diesen die benoetigten
@@ -97,6 +97,24 @@ CCustomer* CBankManager::getcusptr(long cusnrcmp){
          return cuslist.at(i);
     }
     return NULL;
+}
+
+CMoney* CBankManager::getdispoptr(vector<string>& loadvalues, int i){
+    CMoney *dispo = new CMoney(loadvalues, i);
+    if(!CBankManager::dispolistsize()){
+        dispolist.push_back(dispo);
+        return dispo;
+    }
+    else{
+        for(i=0; i<CBankManager::dispolistsize(); i++){  //repurpose i
+            if(*dispo == *(CBankManager::dispolist.at(i))){
+                    delete dispo;
+                    return CBankManager::dispolist.at(i); //falls Dispo betrag schon vorhanden, i=pos im Vektor
+                }
+            }
+            CBankManager::dispolist.push_back(dispo);
+            return dispo;
+    }
 }
 
 void CBankManager::printCustomerList(){

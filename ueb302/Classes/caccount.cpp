@@ -70,23 +70,24 @@ void CAccount::print(){
 }
 
 CAccount* CAccount::load(ifstream &pdata, vector <string>& loadvalues, string endtag){
+    CAccount::loadvalues(pdata, loadvalues, endtag);
+    return new CAccount(loadvalues);
+}
+
+void CAccount::loadvalues(ifstream &pdata, vector <string>& loadvalues, string endtag){
     do{
         if(pdata.eof()){
             cout << "Datei fehlerhaft Account"<<endl;
             break;
         }
-        
         getline(pdata>>ws, loadvalues.back());
         loadvalues.back().pop_back();
-        
-        CAccount::loadvalues(loadvalues, pdata);
-        
+        CAccount::loadsinglevalue(pdata, loadvalues);
     }while(loadvalues.back() != endtag);
     
-    return new CAccount(loadvalues);
 }
 
-void CAccount::loadvalues(vector<string> &loadvalues, ifstream& pdata){
+void CAccount::loadsinglevalue(ifstream& pdata, vector<string> &loadvalues){
     if(loadvalues.back().substr(0, 6) == "<IBAN>"){
         basetypeload::loadstr(loadvalues.back(), 7);
         loadvalues.at(0) = loadvalues.back();
@@ -95,12 +96,11 @@ void CAccount::loadvalues(vector<string> &loadvalues, ifstream& pdata){
         basetypeload::loadstr(loadvalues.back(), 11);
         loadvalues.at(1) = loadvalues.back();
     }
-    if(loadvalues.back().substr(0, 9) == "<Balance>"){
+    if(loadvalues.back().substr(0, 9) == "<Balance>")
         CMoney::load(pdata, loadvalues, 2);
-    }
+    
     if(loadvalues.back().substr(0, 6) == "<Bank>"){
         basetypeload::loadstr(loadvalues.back(), 7);
         loadvalues.at(4) = loadvalues.back();
     }
-    
 }

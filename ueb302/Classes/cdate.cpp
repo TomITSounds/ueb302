@@ -47,40 +47,40 @@ void CDate::print(){
     << setw(4) << Year << endl;
 }
 
-CDate* CDate::load(ifstream &pdata, vector <string>& loadvalues, int i, string endtag, bool alloc){
+CDate* CDate::load(ifstream &pdata, vector <string>& loadvalues, int i, string endtag){
     CDate::loadvalues(pdata, loadvalues, i, endtag);
-
-    if(alloc)
-       return new CDate(loadvalues, i);
-    else
-       return NULL;
+    return new CDate(loadvalues, i);
 }
 
 void CDate::loadvalues(ifstream &pdata, vector<string> &loadvalues, int i, string endtag){
 do{
     if(pdata.eof()){
         cout<<"Datei fehlerhaft CDate"<<endl;
-        break;
+        return;
     }
     
     getline(pdata>>ws, loadvalues.back());
     loadvalues.back().pop_back();
     
+    loadsinglevalue(loadvalues, i);
+    
+}while(loadvalues.back() != endtag);
+    
+}
+
+void CDate::loadsinglevalue(vector <string>& loadvalues, int i){
     if(loadvalues.back().substr(0, 5)=="<Day>"){
         basetypeload::loadstr(loadvalues.back(),6);
         loadvalues.at(0+i) = loadvalues.back();
-        continue;
+        return;
     }
     if(loadvalues.back().substr(0, 7)=="<Month>"){
         basetypeload::loadstr(loadvalues.back(), 8);
         loadvalues.at(1+i) = loadvalues.back();
-        continue;
+        return;
     }
     if(loadvalues.back().substr(0, 6)=="<Year>"){
         basetypeload::loadstr(loadvalues.back(), 7);
         loadvalues.at(2+i) = loadvalues.back();
     }
-    
-}while(loadvalues.back() != endtag);
-    
 }

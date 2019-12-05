@@ -93,7 +93,12 @@ bool CBank::addAccount(CAccount *newacc){
     return false;
 }
 
-CBank* CBank::load(ifstream &pdata, vector <string>& loadvalues, bool alloc){
+CBank* CBank::load(ifstream &pdata, vector <string>& loadvalues){
+    CBank::loadvalues(pdata, loadvalues);
+    return new CBank(loadvalues);
+}
+
+void CBank::loadvalues(ifstream &pdata, vector<string> &loadvalues){
     do{
         if(pdata.eof()){
             cout << "Datei fehlerhaft Bank"<<endl;
@@ -101,17 +106,11 @@ CBank* CBank::load(ifstream &pdata, vector <string>& loadvalues, bool alloc){
         }
         getline(pdata>>ws, loadvalues.back());
         loadvalues.back().pop_back();
-        CBank::loadvalues(pdata, loadvalues);
-        
+        loadsinglevalue(loadvalues);
     }while (loadvalues.back() != "</Bank>");
-    
-    if(alloc)
-        return new CBank(loadvalues);
-    else
-        return NULL;
 }
 
-void CBank::loadvalues(ifstream &pdata, vector<string> &loadvalues){
+void CBank::loadsinglevalue(vector<string> &loadvalues){
 
         if(loadvalues.back().substr(0, 6)=="<Name>"){
             basetypeload::loadstr(loadvalues.back(), 7);
@@ -122,6 +121,5 @@ void CBank::loadvalues(ifstream &pdata, vector<string> &loadvalues){
             basetypeload::loadstr(loadvalues.back(), 6);
             loadvalues.at(1) = loadvalues.back();
         }
-    
-    
 }
+
