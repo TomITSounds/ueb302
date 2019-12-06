@@ -20,6 +20,7 @@ public:
     ~CSavingsAccount();
     
     void print();
+    void printInterest();
     
     static CSavingsAccount* load(ifstream&, vector <string>&, string="</SavingsAccount>");
     static void loadvalues(ifstream&, vector <string>&, string="</SavingsAccount>");

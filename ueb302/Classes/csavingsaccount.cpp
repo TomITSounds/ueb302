@@ -31,6 +31,10 @@ CSavingsAccount::~CSavingsAccount(){
 
 void CSavingsAccount::print(){
     CAccount::print();
+    CSavingsAccount::printInterest();
+}
+
+void CSavingsAccount::printInterest(){
     int oldflag, fixflag = ios::fixed;
     oldflag = cout.flags(fixflag);
     cout << endl << "Sparzinsen: " << interest << " %" << flush;
