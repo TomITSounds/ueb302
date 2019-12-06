@@ -75,5 +75,5 @@ void CFixedDepositAccount::loadsinglevalue(ifstream &pdata, vector <string> &loa
 
 void CFixedDepositAccount::print(){
     CCurrentAccount::print();
-    cout << endl<< interest<< endl;
+    CSavingsAccount::printInterest();
 }
