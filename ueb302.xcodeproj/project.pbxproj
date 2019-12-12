@@ -10,6 +10,7 @@
 		930CA486238176FD00D6B2B1 /* cbankmanager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 930CA484238176FD00D6B2B1 /* cbankmanager.cpp */; };
 		930CA4892381847400D6B2B1 /* cfixedepositaccount.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 930CA4872381847400D6B2B1 /* cfixedepositaccount.cpp */; };
 		9322E7522382D15F0031F3A0 /* basetypeload.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9322E7502382D15F0031F3A0 /* basetypeload.cpp */; };
+		9332BFA523A26A1A00BF6C85 /* ctransactionbatch.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9332BFA323A26A1A00BF6C85 /* ctransactionbatch.cpp */; };
 		93675B5223748D3F00AA44D3 /* cbank.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 93675B5023748D3F00AA44D3 /* cbank.cpp */; };
 		93675B5523748D5500AA44D3 /* ccurrentaccount.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 93675B5323748D5500AA44D3 /* ccurrentaccount.cpp */; };
 		93675B5823748D6A00AA44D3 /* csavingsaccount.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 93675B5623748D6A00AA44D3 /* csavingsaccount.cpp */; };
@@ -21,6 +22,7 @@
 		93BB6A95235D14C20012290C /* caccount.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 93BB6A93235D14C20012290C /* caccount.cpp */; };
 		93BB6A98235D14E30012290C /* UE02.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 93BB6A96235D14E30012290C /* UE02.cpp */; };
 		93BB6A9B235D940A0012290C /* cmoney.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 93BB6A99235D940A0012290C /* cmoney.cpp */; };
+		93D9132E239ABB3700BFD100 /* CTransaction.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 93D9132C239ABB3700BFD100 /* CTransaction.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -42,6 +44,8 @@
 		930CA4882381847400D6B2B1 /* cfixedepositaccount.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = cfixedepositaccount.h; sourceTree = "<group>"; };
 		9322E7502382D15F0031F3A0 /* basetypeload.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = basetypeload.cpp; sourceTree = "<group>"; };
 		9322E7512382D15F0031F3A0 /* basetypeload.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = basetypeload.hpp; sourceTree = "<group>"; };
+		9332BFA323A26A1A00BF6C85 /* ctransactionbatch.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ctransactionbatch.cpp; sourceTree = "<group>"; };
+		9332BFA423A26A1A00BF6C85 /* ctransactionbatch.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ctransactionbatch.h; sourceTree = "<group>"; };
 		93675B5023748D3F00AA44D3 /* cbank.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = cbank.cpp; sourceTree = "<group>"; };
 		93675B5123748D3F00AA44D3 /* cbank.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = cbank.h; sourceTree = "<group>"; };
 		93675B5323748D5500AA44D3 /* ccurrentaccount.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ccurrentaccount.cpp; sourceTree = "<group>"; };
@@ -64,6 +68,8 @@
 		93BB6A96235D14E30012290C /* UE02.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = UE02.cpp; sourceTree = "<group>"; };
 		93BB6A99235D940A0012290C /* cmoney.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = cmoney.cpp; sourceTree = "<group>"; };
 		93BB6A9A235D940A0012290C /* cmoney.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = cmoney.h; sourceTree = "<group>"; };
+		93D9132C239ABB3700BFD100 /* CTransaction.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = CTransaction.cpp; sourceTree = "<group>"; };
+		93D9132D239ABB3700BFD100 /* CTransaction.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CTransaction.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -129,6 +135,10 @@
 				93675B5623748D6A00AA44D3 /* csavingsaccount.cpp */,
 				930CA4882381847400D6B2B1 /* cfixedepositaccount.h */,
 				930CA4872381847400D6B2B1 /* cfixedepositaccount.cpp */,
+				93D9132D239ABB3700BFD100 /* CTransaction.h */,
+				93D9132C239ABB3700BFD100 /* CTransaction.cpp */,
+				9332BFA423A26A1A00BF6C85 /* ctransactionbatch.h */,
+				9332BFA323A26A1A00BF6C85 /* ctransactionbatch.cpp */,
 				9322E7512382D15F0031F3A0 /* basetypeload.hpp */,
 				9322E7502382D15F0031F3A0 /* basetypeload.cpp */,
 			);
@@ -193,6 +203,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				93BB6A8F235D14960012290C /* caddress.cpp in Sources */,
+				9332BFA523A26A1A00BF6C85 /* ctransactionbatch.cpp in Sources */,
 				93675B5223748D3F00AA44D3 /* cbank.cpp in Sources */,
 				939247FA23757539005F5DE6 /* timestamp.cpp in Sources */,
 				930CA486238176FD00D6B2B1 /* cbankmanager.cpp in Sources */,
@@ -203,6 +214,7 @@
 				93675B5823748D6A00AA44D3 /* csavingsaccount.cpp in Sources */,
 				93BB6A89235D146D0012290C /* cdate.cpp in Sources */,
 				93BB6A92235D14B10012290C /* ccustomer.cpp in Sources */,
+				93D9132E239ABB3700BFD100 /* CTransaction.cpp in Sources */,
 				93675B5523748D5500AA44D3 /* ccurrentaccount.cpp in Sources */,
 				9322E7522382D15F0031F3A0 /* basetypeload.cpp in Sources */,
 				93BB6A9B235D940A0012290C /* cmoney.cpp in Sources */,
